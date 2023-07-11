@@ -1,0 +1,17 @@
+form{
+    border: 1px solid rgb(222, 222, 222);
+    background-color: rgb(245, 242, 242);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 30px;
+}
+
+.form-group{
+    margin-top: 10px;
+}
+
+.link{
+    cursor: pointer;
+    text-decoration:none;
+    color: blue;
+}

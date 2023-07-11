@@ -16,3 +16,7 @@ a{
 a:hover{
     background-color: #d2296c;
 }
+
+.active {
+    background-color: #d2296c;
+}

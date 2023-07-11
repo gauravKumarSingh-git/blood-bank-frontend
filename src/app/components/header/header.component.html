@@ -5,11 +5,12 @@
       </button>
       <span>Blood Bank</span>
       <span class="example-spacer"></span>
-      <a>About Us</a>
-      <a>
+      <a routerLinkActive="active" routerLink="about">About Us</a>
+      <a routerLinkActive="active" routerLink="signup">Sign Up</a>
+      <a routerLinkActive="active" routerLink="login">
         <span>Login&nbsp;</span>
-        <mat-icon>login</mat-icon>
+      <mat-icon>login</mat-icon>
       </a>
-      
     </mat-toolbar>
+    <ng-content></ng-content>
   </p>

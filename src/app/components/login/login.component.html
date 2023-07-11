@@ -1,0 +1,58 @@
+<div class="col-12" style="display: flex;">
+    <div class="col-6">
+        <img width="100%" src="https://urbanhospitaldahod.com/assets/uploads/bl4.jpg" alt="blood bank image" srcset="">
+    </div>
+    <div class="col-6">
+        <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+          <h2>Login</h2>
+          <hr>
+          <div class="form-group">
+            <label for="email">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              class="form-control"
+              [ngStyle]="{'border': username.invalid && username.touched ? '1px solid red': 'none'}"
+              ngModel
+              required
+              maxlength="15"
+              #username="ngModel"
+            />
+          </div>
+          <p class="text-danger" *ngIf="username.touched && !username.valid">
+            <span *ngIf="username.errors?.hasOwnProperty('required')">Please provide username</span>
+          </p>
+          <div class="form-group">
+            <label for="email">Password</label>
+            <input
+              type="text"
+              id="password"
+              name="password"
+              class="form-control"
+              [ngStyle]="{'border': password.invalid && password.touched ? '1px solid red': 'none'}"
+              ngModel
+              minlength="8"
+              maxlength="60"
+              required
+              #password="ngModel"
+            />
+          </div>
+          <span class="text-danger" *ngIf="password.touched && password.invalid">
+            <span *ngIf="password.errors?.hasOwnProperty('minlength')">Password should be more than 8 characters</span>
+            <span *ngIf="password.errors?.hasOwnProperty('required')">Please provide password</span>
+          </span>
+          <div class="form-group">
+            <a class="link">Forgot password?</a>
+          </div>
+          <div class="form-group mt-3 col-12">
+            <button 
+                class="btn btn-primary col-3" 
+                type="submit"
+                >Login</button>
+            <div class="col-5 d-inline-block"></div>
+            <span class="col-4"><a class="link" routerLink="/signup">New User? Sign Up</a></span>
+          </div>
+        </form>
+    </div>
+</div>
