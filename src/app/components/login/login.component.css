@@ -3,7 +3,8 @@ form{
     background-color: rgb(245, 242, 242);
     border-radius: 10px;
     padding: 20px;
-    margin: 30px;
+    margin: 10px 30px;
+    box-shadow: 2px 3px 10px rgb(117, 117, 117);
 }
 
 .form-group{

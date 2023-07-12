@@ -11,12 +11,13 @@ a{
     font-size: 15px;
     cursor: pointer;
     align-items: center;
+    margin: 0px 2px;
 }
 
 a:hover{
-    background-color: #d2296c;
+    background-color: #9167db;
 }
 
 .active {
-    background-color: #d2296c;
+    background-color: #9167db;
 }

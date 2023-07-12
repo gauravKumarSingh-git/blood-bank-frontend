@@ -49,10 +49,11 @@
             <button 
                 class="btn btn-primary col-3" 
                 type="submit"
+                [disabled]="loginForm.invalid"
                 >Login</button>
             <div class="col-5 d-inline-block"></div>
-            <span class="col-4"><a class="link" routerLink="/signup">New User? Sign Up</a></span>
           </div>
         </form>
+        <div class="col-4" style="text-align: center;margin: auto;"><a class="link" routerLink="/signup">New User? Sign Up</a></div>
     </div>
 </div>
