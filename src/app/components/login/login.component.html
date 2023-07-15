@@ -1,11 +1,14 @@
-<div class="col-12" style="display: flex;">
-    <div class="col-6">
+<div class="col-12" style="display: flex; flex-wrap: wrap;">
+    <div class="col-xs-12 col-md-6">
         <img width="100%" src="https://urbanhospitaldahod.com/assets/uploads/bl4.jpg" alt="blood bank image" srcset="">
     </div>
-    <div class="col-6">
+    <div class="col-xs-12 col-md-6" style="margin: auto;">
         <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
           <h2>Login</h2>
           <hr>
+          <div class="form-group alert alert-danger" *ngIf="errorMessage.length > 0">
+            {{ errorMessage }}
+          </div>
           <div class="form-group">
             <label for="email">Username</label>
             <input
@@ -47,13 +50,12 @@
           </div>
           <div class="form-group mt-3 col-12">
             <button 
-                class="btn btn-primary col-3" 
+                class="btn btn-primary" 
                 type="submit"
                 [disabled]="loginForm.invalid"
                 >Login</button>
-            <div class="col-5 d-inline-block"></div>
           </div>
         </form>
-        <div class="col-4" style="text-align: center;margin: auto;"><a class="link" routerLink="/signup">New User? Sign Up</a></div>
+        <div style="text-align: center;margin: auto;"><a class="link" routerLink="/signup">New User? Sign Up</a></div>
     </div>
 </div>

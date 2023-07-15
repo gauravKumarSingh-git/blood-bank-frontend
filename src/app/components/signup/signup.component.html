@@ -1,81 +1,114 @@
-<!-- <div class="container">
-  <div class="row">
-    <form>
-      <h2>Sign Up</h2>
-      <hr />
-      <div class="form-group">
-        <mat-form-field>
-          <mat-label>Username</mat-label>
-          <input matInput />
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Password</mat-label>
-          <input matInput />
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Confirm Password</mat-label>
-          <input matInput />
-        </mat-form-field>
-      </div>
-      <div class="form-group">
-        <mat-form-field>
-          <mat-label>Select</mat-label>
-          <mat-select>
-            <mat-option value="one">First option</mat-option>
-            <mat-option value="two">Second option</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="form-group">
-        <mat-form-field>
-          <mat-label>Textarea</mat-label>
-          <textarea matInput></textarea>
-        </mat-form-field>
-      </div>
-    </form>
-  </div>
-</div> -->
 <mat-stepper #stepper>
   <mat-step [stepControl]="usernameFormGroup">
-    <form [formGroup]="usernameFormGroup" class="container">
+    <form [formGroup]="usernameFormGroup" class="container" >
       <ng-template matStepLabel>Choose Username and Role</ng-template>
       <div class="row">
         <mat-form-field class="col-6">
           <mat-label>Enter Username</mat-label>
           <input matInput placeholder="Enter your Username" formControlName="usernameCtrl" required>
+          <mat-error
+            *ngIf="usernameFormGroup.get('usernameCtrl')?.touched &&
+              usernameFormGroup.get('usernameCtrl')?.hasError('required')">
+                Please provide username
+          </mat-error>
+          <mat-error
+            *ngIf="usernameFormGroup.get('usernameCtrl')?.touched &&
+              usernameFormGroup.get('usernameCtrl')?.hasError('minlength')">
+                Username should be at least 5 Characters
+          </mat-error>
         </mat-form-field>
         <mat-form-field class="col-6">
           <mat-label>Select Role</mat-label>
-            <mat-select matInput formControlName="roleCtrl" placeholder="Select your Role">
-              <mat-option value="male">Donor</mat-option>
-              <mat-option value="female">Hospital</mat-option>
-            </mat-select>
+          <mat-select matInput formControlName="roleCtrl" placeholder="Select your Role">
+            <mat-option value="donor">Donor</mat-option>
+            <mat-option value="hospital">Hospital</mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="usernameFormGroup.get('roleCtrl')?.touched &&
+              usernameFormGroup.get('roleCtrl')?.hasError('required')">
+                Please select role
+          </mat-error>
         </mat-form-field>
       </div>
       <div>
-        <button mat-button matStepperNext>Next</button>
+        <button 
+          mat-button 
+          matStepperNext 
+          type="submit"
+          [disabled]="usernameFormGroup.invalid" 
+          >Next</button>
       </div>
     </form>
   </mat-step>
-  <mat-step [stepControl]="passwordFormGroup" label="Create Password">
+  <mat-step [stepControl]="passwordFormGroup" label="Set Password">
     <form [formGroup]="passwordFormGroup">
       <div>
         <mat-form-field>
           <mat-label>Password</mat-label>
-          <input matInput formControlName="pwdCtrl" placeholder="Enter Password"
-                 required>
+          <input 
+            [type]="hide ? 'password' : 'text'" 
+            matInput 
+            formControlName="pwdCtrl" 
+            placeholder="Enter Password"
+            required>
+          <button 
+            mat-icon-button 
+            matSuffix 
+            (click)="hide = !hide" [attr.aria-label]="'Hide password'" 
+            [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error
+            *ngIf="passwordFormGroup.get('pwdCtrl')?.touched && 
+            passwordFormGroup.get('pwdCtrl')?.hasError('required')">
+              Please provide password
+          </mat-error>
+          <mat-error
+            *ngIf="passwordFormGroup.get('pwdCtrl')?.touched && 
+            passwordFormGroup.get('pwdCtrl')?.hasError('minlength')">
+              Password should have at least 8 characters
+          </mat-error>
         </mat-form-field>
       </div>
       <div>
         <mat-form-field>
           <mat-label>Confirm Password</mat-label>
-          <input matInput formControlName="pwdCtrl" placeholder="Confirm Password"
-                 required>
+          <input 
+            [type]="hide ? 'password' : 'text'"
+            matInput 
+            formControlName="confirmPwdCtrl" 
+            placeholder="Confirm Password"
+            required>
+          <button 
+            mat-icon-button 
+            matSuffix 
+            (click)="hide = !hide" 
+            [attr.aria-label]="'Hide password'" 
+            [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error 
+            *ngIf="passwordFormGroup.get('confirmPwdCtrl')?.hasError('passwordDoesNotMatch') && 
+              passwordFormGroup.get('confirmPwdCtrl')?.touched">
+            Password does not match
+          </mat-error>
+          <mat-error 
+            *ngIf="passwordFormGroup.get('confirmPwdCtrl')?.hasError('minLength') && 
+              passwordFormGroup.get('confirmPwdCtrl')?.touched">
+            Password should contain at least 8 characters
+          </mat-error>
         </mat-form-field>
       </div>
       <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+        <button 
+          mat-button 
+          matStepperPrevious 
+          >Back</button>
+        <button 
+          mat-button 
+          matStepperNext 
+          [disabled]="passwordFormGroup.get('confirmPwdCtrl')?.hasError('passwordDoesNotMatch')"
+          >Next</button>
       </div>
     </form>
   </mat-step>
@@ -84,14 +117,15 @@
     <form [formGroup]="userDetailsFormGroup" class="container">
       <div class="row">
         <mat-form-field class="col-4">
-          <mat-label>Name</mat-label>
-          <input matInput type="email" formControlName="nameCtrl" placeholder="Enter your Name">
+          <mat-label *ngIf="usernameFormGroup.get('roleCtrl')?.value!=='donor'">Hospital's Name</mat-label>
+          <mat-label *ngIf="usernameFormGroup.get('roleCtrl')?.value==='donor'">Name</mat-label>
+          <input matInput type="email" formControlName="nameCtrl" placeholder="Enter Name">
         </mat-form-field>
         <mat-form-field class="col-4">
           <mat-label>Email</mat-label>
           <input matInput type="email" formControlName="emailCtrl" placeholder="Enter your Email">
         </mat-form-field>
-        <mat-form-field class="col-4">
+        <mat-form-field class="col-4" *ngIf="usernameFormGroup.get('roleCtrl')?.value==='donor'">
           <mat-label>Gender</mat-label>
           <mat-select matInput formControlName="genderCtrl" placeholder="Select your Gender">
             <mat-option value="male">Male</mat-option>
@@ -102,12 +136,49 @@
       </div>
       <div class="row">
         <mat-form-field class="col-4">
-          <mat-label>City</mat-label>
-          <input matInput type="text" formControlName="cityCtrl" placeholder="Enter your City">
+          <mat-label>State</mat-label>
+          <mat-select matInput formControlName="stateCtrl" placeholder="Select your State">
+            <mat-option value="AP">Andhra Pradesh</mat-option>
+            <mat-option value="AR">Arunachal Pradesh</mat-option>
+            <mat-option value="AS">Assam</mat-option>
+            <mat-option value="BR">Bihar</mat-option>
+            <mat-option value="CT">Chhattisgarh</mat-option>
+            <mat-option value="GA">Gujarat</mat-option>
+            <mat-option value="HR">Haryana</mat-option>
+            <mat-option value="HP">Himachal Pradesh</mat-option>
+            <mat-option value="JK">Jammu and Kashmir</mat-option>
+            <mat-option value="GA">Goa</mat-option>
+            <mat-option value="JH">Jharkhand</mat-option>
+            <mat-option value="KA">Karnataka</mat-option>
+            <mat-option value="KL">Kerala</mat-option>
+            <mat-option value="MP">Madhya Pradesh</mat-option>
+            <mat-option value="MH">Maharashtra</mat-option>
+            <mat-option value="MN">Manipur</mat-option>
+            <mat-option value="ML">Meghalaya</mat-option>
+            <mat-option value="MZ">Mizoram</mat-option>
+            <mat-option value="NL">Nagaland</mat-option>
+            <mat-option value="OR">Odisha</mat-option>
+            <mat-option value="PB">Punjab</mat-option>
+            <mat-option value="RJ">Rajasthan</mat-option>
+            <mat-option value="SK">Sikkim</mat-option>
+            <mat-option value="TN">Tamil Nadu</mat-option>
+            <mat-option value="TG">Telangana</mat-option>
+            <mat-option value="TR">Tripura</mat-option>
+            <mat-option value="UT">Uttarakhand</mat-option>
+            <mat-option value="UP">Uttar Pradesh</mat-option>
+            <mat-option value="WB">West Bengal</mat-option>
+            <mat-option value="AN">Andaman and Nicobar Islands</mat-option>
+            <mat-option value="CH">Chandigarh</mat-option>
+            <mat-option value="DN">Dadra and Nagar Haveli</mat-option>
+            <mat-option value="DD">Daman and Diu</mat-option>
+            <mat-option value="DL">Delhi</mat-option>
+            <mat-option value="LD">Lakshadweep</mat-option>
+            <mat-option value="PY">Puducherry</mat-option>
+          </mat-select>
         </mat-form-field>
         <mat-form-field class="col-4">
-          <mat-label>State</mat-label>
-          <input matInput type="text" formControlName="stateCtrl" placeholder="Enter your State">
+          <mat-label>City</mat-label>
+          <input matInput type="text" formControlName="cityCtrl" placeholder="Enter your City">
         </mat-form-field>
         <mat-form-field class="col-4">
           <mat-label>Address</mat-label>
@@ -118,6 +189,10 @@
         <mat-form-field class="col-4">
           <mat-label>Mobile Number</mat-label>
           <input matInput type="number" formControlName="mnoCtrl" placeholder="Enter your Mobile Number">
+          <mat-error
+            *ngIf="userDetailsFormGroup.get('mnoCtrl')?.hasError('min') && userDetailsFormGroup.get('mnoCtrol')?.touched">
+                Inavlid Mobile Number
+          </mat-error>
         </mat-form-field>
       </div>
       <div>
