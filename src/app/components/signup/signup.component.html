@@ -34,7 +34,6 @@
         <button 
           mat-button 
           matStepperNext 
-          type="submit"
           [disabled]="usernameFormGroup.invalid" 
           >Next</button>
       </div>
@@ -114,16 +113,28 @@
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Enter Your Details</ng-template>
-    <form [formGroup]="userDetailsFormGroup" class="container">
+    <form [formGroup]="userDetailsFormGroup" class="container" (ngSubmit)="onUserDetailsSubmit()">
       <div class="row">
         <mat-form-field class="col-4">
           <mat-label *ngIf="usernameFormGroup.get('roleCtrl')?.value!=='donor'">Hospital's Name</mat-label>
           <mat-label *ngIf="usernameFormGroup.get('roleCtrl')?.value==='donor'">Name</mat-label>
-          <input matInput type="email" formControlName="nameCtrl" placeholder="Enter Name">
+          <input matInput type="text" formControlName="nameCtrl" placeholder="Enter Name">
+          <mat-error
+            *ngIf="userDetailsFormGroup.get('nameCtrl')?.hasError('required')">
+                Please provide name
+          </mat-error>
         </mat-form-field>
         <mat-form-field class="col-4">
           <mat-label>Email</mat-label>
           <input matInput type="email" formControlName="emailCtrl" placeholder="Enter your Email">
+          <mat-error
+            *ngIf="userDetailsFormGroup.get('emailCtrl')?.hasError('required')">
+                Please provide email
+          </mat-error>
+          <mat-error
+            *ngIf="userDetailsFormGroup.get('emailCtrl')?.hasError('email')">
+                Invalid email
+          </mat-error>
         </mat-form-field>
         <mat-form-field class="col-4" *ngIf="usernameFormGroup.get('roleCtrl')?.value==='donor'">
           <mat-label>Gender</mat-label>
@@ -132,6 +143,10 @@
             <mat-option value="female">Female</mat-option>
             <mat-option value="others">Others</mat-option>
           </mat-select>
+          <mat-error
+            *ngIf="userDetailsFormGroup.get('genderCtrl')?.hasError('required')">
+                Please select gender
+          </mat-error>
         </mat-form-field>
       </div>
       <div class="row">
@@ -175,14 +190,26 @@
             <mat-option value="LD">Lakshadweep</mat-option>
             <mat-option value="PY">Puducherry</mat-option>
           </mat-select>
+          <mat-error
+            *ngIf="userDetailsFormGroup.get('stateCtrl')?.hasError('required')">
+                Please select state
+          </mat-error>
         </mat-form-field>
         <mat-form-field class="col-4">
           <mat-label>City</mat-label>
           <input matInput type="text" formControlName="cityCtrl" placeholder="Enter your City">
+          <mat-error
+            *ngIf="userDetailsFormGroup.get('cityCtrl')?.hasError('required')">
+                Please provide city
+          </mat-error>
         </mat-form-field>
         <mat-form-field class="col-4">
           <mat-label>Address</mat-label>
           <input matInput type="text" formControlName="addressCtrl" placeholder="Enter your Address">
+          <mat-error
+            *ngIf="userDetailsFormGroup.get('addressCtrl')?.hasError('required')">
+                Please provide address
+          </mat-error>
         </mat-form-field>
       </div>
       <div class="row">
@@ -190,14 +217,19 @@
           <mat-label>Mobile Number</mat-label>
           <input matInput type="number" formControlName="mnoCtrl" placeholder="Enter your Mobile Number">
           <mat-error
-            *ngIf="userDetailsFormGroup.get('mnoCtrl')?.hasError('min') && userDetailsFormGroup.get('mnoCtrol')?.touched">
+            *ngIf="userDetailsFormGroup.get('mnoCtrl')?.hasError('required')">
+                Please provide mobile number
+          </mat-error>
+          <mat-error
+            *ngIf="(userDetailsFormGroup.get('mnoCtrl')?.hasError('min')  ||
+              userDetailsFormGroup.get('mnoCtrl')?.hasError('max'))">
                 Inavlid Mobile Number
           </mat-error>
         </mat-form-field>
       </div>
       <div>
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button matStepperNext type="submit">Next</button>
       </div>
     </form>
   </mat-step>

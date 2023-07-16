@@ -31,7 +31,7 @@ export class SignupComponent implements OnInit{
       cityCtrl: ['', Validators.required],
       stateCtrl: ['', Validators.required],
       addressCtrl: ['', Validators.required],
-      mnoCtrl: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
+      mnoCtrl: ['', [Validators.required, Validators.min(1000000000), Validators.max(9999999999)]],
   
     })
   }
@@ -43,8 +43,8 @@ export class SignupComponent implements OnInit{
     return null;
   }
 
-  onUsernameFormSubmit(){
-    console.log(this.usernameFormGroup);
+  onUserDetailsSubmit(){
+    console.log(this.userDetailsFormGroup);
   }
   constructor(private _formBuilder: FormBuilder) {}
   
