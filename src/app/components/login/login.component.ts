@@ -21,17 +21,17 @@ export class LoginComponent {
   ) {}
 
   onSubmit(form: NgForm) {
-    // console.log(form.value);
     this.loginService.login(form.value.username, form.value.password).subscribe(
       (responseData) => {
-        // console.log(responseData);
-        this.jwtTokenService.setToken(responseData);
         this.localStorageService.set('jwt',responseData);
-        console.log(this.localStorageService.get('jwt'));
-        // console.log(this.jwtTokenService.getIssuedTime());
-        // console.log(this.jwtTokenService.getUser());
-        // console.log(this.jwtTokenService.getExpiryTime());
-        this.errorMessage = '';
+        let jwt = this.localStorageService.get('jwt');
+        console.log(jwt);
+        // if(jwt){
+        //   console.log(this.jwtTokenService.isTokenExpired(jwt));
+        //   console.log(this.jwtTokenService.getRole(jwt));
+        //   console.log(this.jwtTokenService.getUser(jwt));
+        // }
+        if(this.errorMessage) this.errorMessage = '';
       },
       (error) => {
         if (error.status === 400) {

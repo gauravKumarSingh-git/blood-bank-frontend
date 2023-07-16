@@ -7,42 +7,34 @@ import jwt_decode from 'jwt-decode';
 export class JwtTokenService {
   constructor() {}
 
-  jwtToken: string;
-  decodedToken: { [key: string]: string };
-
-  setToken(token: string) {
-    if (token) {
-      this.jwtToken = token;
+  getDecodeToken(token: string): any {
+    try{
+      return jwt_decode(token);
+    }catch(Error){
+      return null;
     }
   }
 
-  decodeToken() {
-    if (this.jwtToken) {
-      this.decodedToken = jwt_decode(this.jwtToken);
-    }
+  getUser(token: string) {
+    return this.getDecodeToken(token)['sub'];
   }
 
-  getDecodeToken() {
-    return jwt_decode(this.jwtToken);
+  getRole(token: string){
+    return this.getDecodeToken(token)['role'];
   }
 
-  getUser() {
-    this.decodeToken();
-    return this.decodedToken ? this.decodedToken['sub'] : null;
+  getIssuedTime(token: string) {
+    return this.getDecodeToken(token)['iat'];
+
   }
 
-  getIssuedTime() {
-    this.decodeToken();
-    return this.decodedToken ? this.decodedToken['iat'] : null;
+  getExpiryTime(token: string) {
+    return this.getDecodeToken(token)['exp'];
+
   }
 
-  getExpiryTime() {
-    this.decodeToken();
-    return this.decodedToken ? this.decodedToken['exp'] : null;
-  }
-
-  isTokenExpired(): boolean {
-    const expiryTime: number = this.getExpiryTime() ? +this.getExpiryTime : 0;
+  isTokenExpired(token: string): boolean {
+    const expiryTime: number = this.getExpiryTime(token);
     if (expiryTime) {
       return 1000 * expiryTime - new Date().getTime() < 5000;
     } else {
