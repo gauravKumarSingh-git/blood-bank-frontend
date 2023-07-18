@@ -14,16 +14,32 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { HomeComponent } from './components/home/home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignupComponent } from './components/signup/signup.component';
-import {MatSelectModule} from '@angular/material/select';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import {
+  MatFormFieldModule,
+  MAT_FORM_FIELD_DEFAULT_OPTIONS,
+} from '@angular/material/form-field';
 import { HttpClientModule } from '@angular/common/http';
-import {MatCardModule} from '@angular/material/card';
-import {MatStepperModule} from '@angular/material/stepper';
+import { MatCardModule } from '@angular/material/card';
+import { MatStepperModule } from '@angular/material/stepper';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LoginHeaderComponent } from './components/header/login-header.componenet';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, LoginComponent, PageNotFoundComponent, HomeComponent, SignupComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    LoginComponent,
+    PageNotFoundComponent,
+    HomeComponent,
+    SignupComponent,
+    LoginHeaderComponent,
+    SidenavComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -33,16 +49,23 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatIconModule,
     MatTooltipModule,
     FormsModule,
-    MatFormFieldModule, 
-    MatInputModule, 
+    MatFormFieldModule,
+    MatInputModule,
     MatSelectModule,
     MatCardModule,
     MatStepperModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    MatSidenavModule,
+    MatListModule,
   ],
-  providers: [{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}],
+  providers: [
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: { appearance: 'outline' },
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

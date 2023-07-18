@@ -1,6 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth.service';
 import { JwtTokenService } from '../jwt/jwt-token.service';
 import { LocalStorageService } from '../jwt/local-storage.service';
 import { LoginService } from './login.service';
@@ -15,22 +17,30 @@ export class LoginComponent {
 
   constructor(
     private loginService: LoginService,
-    private http: HttpClient,
     private localStorageService: LocalStorageService,
-    private jwtTokenService: JwtTokenService
+    private jwtTokenService: JwtTokenService,
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   onSubmit(form: NgForm) {
     this.loginService.login(form.value.username, form.value.password).subscribe(
       (responseData) => {
+        // console.log(responseData);
         this.localStorageService.set('jwt',responseData);
-        let jwt = this.localStorageService.get('jwt');
-        console.log(jwt);
-        // if(jwt){
-        //   console.log(this.jwtTokenService.isTokenExpired(jwt));
-        //   console.log(this.jwtTokenService.getRole(jwt));
-        //   console.log(this.jwtTokenService.getUser(jwt));
-        // }
+        this.jwtTokenService.setToken(responseData);
+        this.authService.login();
+        let role = this.jwtTokenService.getRole();
+        if(role === 'ROLE_DONOR'){
+          this.router.navigate(['/donor']);
+        }
+        if(role === 'ROLE_HOSPITAL'){
+          this.router.navigate(['/hospital']);
+        }
+        if(role === 'ROLE_ADMIN'){
+          this.router.navigate(['/admin']);
+        }
+
         if(this.errorMessage) this.errorMessage = '';
       },
       (error) => {

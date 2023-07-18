@@ -5,40 +5,94 @@ import jwt_decode from 'jwt-decode';
   providedIn: 'root',
 })
 export class JwtTokenService {
+  jwtToken: string;
+  decodedToken: { [key: string]: string };
+
   constructor() {}
 
-  getDecodeToken(token: string): any {
-    try{
-      return jwt_decode(token);
-    }catch(Error){
-      return null;
+  setToken(token: string) {
+    if (token) {
+      this.jwtToken = token;
     }
   }
 
-  getUser(token: string) {
-    return this.getDecodeToken(token)['sub'];
+  getToken() {
+    return this.jwtToken;
   }
 
-  getRole(token: string){
-    return this.getDecodeToken(token)['role'];
+  decodeToken() {
+    if (this.jwtToken) {
+      this.decodedToken = jwt_decode(this.jwtToken);
+    }
   }
 
-  getIssuedTime(token: string) {
-    return this.getDecodeToken(token)['iat'];
-
+  getDecodeToken() {
+    return jwt_decode(this.jwtToken);
   }
 
-  getExpiryTime(token: string) {
-    return this.getDecodeToken(token)['exp'];
-
+  getRole() {
+    this.decodeToken();
+    return this.decodedToken ? this.decodedToken['role'] : null;
   }
 
-  isTokenExpired(token: string): boolean {
-    const expiryTime: number = this.getExpiryTime(token);
+  getUser() {
+    this.decodeToken();
+    return this.decodedToken ? this.decodedToken['sub'] : null;
+  }
+
+  getIssuedTime() {
+    this.decodeToken();
+    return this.decodedToken ? this.decodedToken['iat'] : null;
+  }
+
+  getExpiryTime() {
+    this.decodeToken();
+    return this.decodedToken ? this.decodedToken['exp'] : null;
+  }
+
+  isTokenExpired(): boolean {
+    const expiryTime = this.getExpiryTime();
     if (expiryTime) {
-      return 1000 * expiryTime - new Date().getTime() < 5000;
+      return 1000 * (+expiryTime) - new Date().getTime() < 5000;
     } else {
       return false;
     }
   }
+
+  // constructor() {}
+
+  // getDecodeToken(token: string): any {
+  //   try{
+  //     return jwt_decode(token);
+  //   }catch(Error){
+  //     return null;
+  //   }
+  // }
+
+  // getUser(token: string) {
+  //   return this.getDecodeToken(token)['sub'];
+  // }
+
+  // getRole(token: string){
+  //   return this.getDecodeToken(token)['role'];
+  // }
+
+  // getIssuedTime(token: string) {
+  //   return this.getDecodeToken(token)['iat'];
+
+  // }
+
+  // getExpiryTime(token: string) {
+  //   return this.getDecodeToken(token)['exp'];
+
+  // }
+
+  // isTokenExpired(token: string): boolean {
+  //   const expiryTime: number = this.getExpiryTime(token);
+  //   if (expiryTime) {
+  //     return 1000 * expiryTime - new Date().getTime() < 5000;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 }

@@ -1,0 +1,23 @@
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+a{
+    display: flex;
+    padding: 5px 10px;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    align-items: center;
+    margin: 0px 2px;
+}
+
+a:hover{
+    background-color: #9167db;
+}
+
+.active {
+    background-color: #9167db;
+}
