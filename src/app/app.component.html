@@ -4,7 +4,7 @@
 
 <app-sidenav *ngIf="(role$ | async) === 'ROLE_ADMIN'">
     <mat-nav-list list>
-        <a mat-list-item [routerLink]="['admin', 'home']" routerLinkActive="active">Home</a>
+        <a mat-list-item [routerLink]="['admin']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
         <a mat-list-item [routerLink]="['admin', 'donor-details']" routerLinkActive="active">Donors</a>
         <a mat-list-item [routerLink]="['admin', 'hospital-details']" routerLinkActive="active">Hospitals</a>
         <a mat-list-item [routerLink]="['admin', 'donations']" routerLinkActive="active">Donations</a>

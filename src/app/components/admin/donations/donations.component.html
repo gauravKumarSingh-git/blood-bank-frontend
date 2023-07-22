@@ -1,0 +1,38 @@
+<h2>Donations</h2>
+<div class="table-cover">
+    <table class="table table-striped"
+        *ngIf="donations$ | async as donations">
+        <thead>
+          <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">State</th>
+            <th scope="col">Address</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Blood Group</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Date of Request</th>
+            <th scope="col">Status</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let donation of donations; index as i">
+            <th scope="row">{{i+1}}</th>
+            <td>{{ donation.username }}</td>
+            <td>{{ donation.email }}</td>
+            <td>{{ donation.state }}</td>
+            <td>{{ donation.address }}</td>
+            <td>{{ donation.phoneNumber }}</td>
+            <td>{{ donation.bloodGroup }}</td>
+            <td>{{ donation.quantity }}</td>
+            <td>{{ donation.date }}</td>
+            <td>{{ donation.status }}</td>
+            <td><button type="button" class="btn btn-success">Accept</button></td>
+            <td><button type="button" class="btn btn-danger">Reject</button></td>
+          </tr>
+        </tbody>
+    </table>
+</div>

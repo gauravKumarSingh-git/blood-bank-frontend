@@ -1,0 +1,38 @@
+<h2>Blood Requests</h2>
+<div class="table-cover">
+    <table class="table table-striped"
+        *ngIf="requests$ | async as requests">
+        <thead>
+          <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">State</th>
+            <th scope="col">Address</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Blood Group</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Date of Request</th>
+            <th scope="col">Status</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let request of requests; index as i">
+            <th scope="row">{{i+1}}</th>
+            <td>{{ request.username }}</td>
+            <td>{{ request.email }}</td>
+            <td>{{ request.state }}</td>
+            <td>{{ request.address }}</td>
+            <td>{{ request.phoneNumber }}</td>
+            <td>{{ request.bloodGroup }}</td>
+            <td>{{ request.quantity }}</td>
+            <td>{{ request.date }}</td>
+            <td>{{ request.status }}</td>
+            <td><button type="button" class="btn btn-success">Accept</button></td>
+            <td><button type="button" class="btn btn-danger">Reject</button></td>
+          </tr>
+        </tbody>
+    </table>
+</div>

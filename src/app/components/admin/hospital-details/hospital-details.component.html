@@ -1,7 +1,7 @@
-<h2>Donor Details</h2>
+<h2>Hospital Details</h2>
 <div class="table-cover">
     <table class="table table-striped"
-        *ngIf="donors$ | async as donors">
+        *ngIf="hospitals$ | async as hospitals">
         <thead>
           <tr>
             <th scope="col">S.No</th>
@@ -10,33 +10,24 @@
             <th scope="col">State</th>
             <th scope="col">City</th>
             <th scope="col">Address</th>
-            <th scope="col">DOB</th>
             <th scope="col">Phone Number</th>
             <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let donor of donors; index as i">
+          <tr *ngFor="let hospital of hospitals; index as i">
             <th scope="row">{{i+1}}</th>
-            <td>{{ donor.username }}</td>
-            <td>{{ donor.email }}</td>
-            <td>{{ donor.state }}</td>
-            <td>{{ donor.city }}</td>
-            <td>{{ donor.address }}</td>
-            <td>{{ donor.dateOfBirth }}</td>
-            <td>{{ donor.phoneNumber }}</td>
-            <td>
-              <button 
-                type="button" 
-                class="btn btn-primary"
-                >Edit</button>
-            </td>
-                
+            <td>{{ hospital.username }}</td>
+            <td>{{ hospital.email }}</td>
+            <td>{{ hospital.state }}</td>
+            <td>{{ hospital.city }}</td>
+            <td>{{ hospital.address }}</td>
+            <td>{{ hospital.phoneNumber }}</td>
+            <td><button class="btn btn-primary">Edit</button></td>
           </tr>
         </tbody>
     </table>
 </div>
-
 <nav aria-label="Page navigation example" style="align-items: right;">
     <ul class="pagination">
       <li class="page-item"><a class="page-link" href="#">Previous</a></li>

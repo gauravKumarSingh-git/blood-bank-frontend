@@ -1,2 +1,14 @@
-
-<p>admin works!</p>
+<div *ngIf="bloodGroups$ | async as bloodGroups">
+    <div class="row" style="justify-content: center;">
+        <div class="custom-card" *ngFor="let bloodDetail of bloodGroups">
+            <img 
+                [src]="['../../../assets/bloodGroup' + bloodDetail.bloodGroupName + '.jpg']"
+                alt={{bloodDetail.bloodGroupName}} 
+                class="col-8">
+            <span class="col-4">
+                <p>Quantity</p>
+                {{ bloodDetail.quantity }}
+            </span>
+        </div>
+    </div>
+</div>

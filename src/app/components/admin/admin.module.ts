@@ -4,7 +4,13 @@ import { CommonModule } from '@angular/common';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
 import { DonorDetailsComponent } from './donor-details/donor-details.component';
-import { MatListModule } from '@angular/material/list'
+import { MatListModule } from '@angular/material/list';
+import { HospitalDetailsComponent } from './hospital-details/hospital-details.component';
+import { RequestHistoryComponent } from './request-history/request-history.component';
+import { DonationsComponent } from './donations/donations.component';
+import { RequestsComponent } from './requests/requests.component';
+import { BloodStockComponent } from './blood-stock/blood-stock.component'
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -12,11 +18,17 @@ import { MatListModule } from '@angular/material/list'
   declarations: [
     AdminComponent,
     DonorDetailsComponent,
+    HospitalDetailsComponent,
+    RequestHistoryComponent,
+    DonationsComponent,
+    RequestsComponent,
+    BloodStockComponent,
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
     MatListModule,
+    ReactiveFormsModule
   ]
 })
 export class AdminModule { }

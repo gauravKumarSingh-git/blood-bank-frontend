@@ -30,6 +30,7 @@ const routes: Routes = [
   {
     path: 'admin',
     canActivate: [AuthGaurd],
+    // canActivate: [true],
     data: { role: 'ROLE_ADMIN' },
     loadChildren: () =>
       import('./components/admin/admin.module').then((m) => m.AdminModule),
