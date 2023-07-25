@@ -8,11 +8,20 @@ export class JwtTokenService {
   jwtToken: string;
   decodedToken: { [key: string]: string };
 
-  constructor() {}
+  constructor() {
+    let token = localStorage.getItem('jwt');
+    if(token){
+      this.jwtToken = token;
+    }
+  }
 
   setToken(token: string) {
     if (token) {
       this.jwtToken = token;
+    }
+    let role = this.getRole();
+    if(role){
+      localStorage.setItem('role', role)
     }
   }
 

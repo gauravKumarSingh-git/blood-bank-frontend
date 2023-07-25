@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { catchError, EMPTY, map, tap } from 'rxjs';
 import { AppConstants } from 'src/app/constants/app.constants';
 import { environment } from 'src/app/environments/environment';
-import { BloodGroup } from './shared/blood-group.model';
+import { BloodGroup } from '../shared/blood-group.model';
 
 @Component({
   selector: 'app-admin',

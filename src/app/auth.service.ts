@@ -9,7 +9,8 @@ export class AuthService {
   private isLogin = new Subject<boolean>();
   private role = new Subject<string>();
 
-  constructor(private jwtTokenService: JwtTokenService) { }
+  constructor(private jwtTokenService: JwtTokenService) { 
+  }
 
   login() {
     this.isLogin.next(true);
@@ -22,6 +23,9 @@ export class AuthService {
   logout() {
     this.isLogin.next(false);
     this.role.next('')
+    localStorage.setItem('jwt', '');
+    localStorage.setItem('role', '');
+    localStorage.setItem('username', '');
   }
 
   isLoggedIn() {

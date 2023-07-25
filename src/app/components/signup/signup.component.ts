@@ -31,6 +31,7 @@ export class SignupComponent implements OnInit{
       cityCtrl: ['', Validators.required],
       stateCtrl: ['', Validators.required],
       addressCtrl: ['', Validators.required],
+      dobCtrl: ['', [Validators.required]], 
       mnoCtrl: ['', [Validators.required, Validators.min(1000000000), Validators.max(9999999999)]],
   
     })

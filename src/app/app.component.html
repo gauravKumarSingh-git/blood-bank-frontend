@@ -1,4 +1,4 @@
-<app-header *ngIf="!(isLoggedIn$ | async)">
+<!-- <app-header *ngIf="!(isLoggedIn$ | async)">
     <router-outlet></router-outlet>
 </app-header>
 
@@ -16,7 +16,7 @@
 </app-sidenav>
 <app-sidenav *ngIf="(role$ | async) === 'ROLE_DONOR'">
     <mat-nav-list list>
-        <a mat-list-item [routerLink]="['donor', 'home']" routerLinkActive="active">Home</a>
+        <a mat-list-item [routerLink]="['donor']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
         <a mat-list-item [routerLink]="['donor', 'donate']" routerLinkActive="active">Donate Blood</a>
         <a mat-list-item [routerLink]="['donor', 'history']" routerLinkActive="active">Donation History</a>
         <a mat-list-item [routerLink]="['donor', 'profile']" routerLinkActive="active">Your Profile</a>
@@ -25,7 +25,42 @@
 </app-sidenav>
 <app-sidenav *ngIf="(role$ | async) === 'ROLE_HOSPITAL'">
     <mat-nav-list list>
-        <a mat-list-item [routerLink]="['hospital', 'home']" routerLinkActive="active">Home</a>
+        <a mat-list-item [routerLink]="['hospital']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+        <a mat-list-item [routerLink]="['hospital', 'request']" routerLinkActive="active">Make Request</a>
+        <a mat-list-item [routerLink]="['hospital', 'history']" routerLinkActive="active">Request History</a>
+        <a mat-list-item [routerLink]="['hospital', 'profile']" routerLinkActive="active">Your Profile</a>
+    </mat-nav-list>
+    <router-outlet content></router-outlet>
+</app-sidenav> -->
+
+<app-header *ngIf="!getJwt()">
+    <router-outlet></router-outlet>
+</app-header>
+
+<app-sidenav *ngIf="getRole() === 'ROLE_ADMIN'">
+    <mat-nav-list list>
+        <a mat-list-item [routerLink]="['admin']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+        <a mat-list-item [routerLink]="['admin', 'donor-details']" routerLinkActive="active">Donors</a>
+        <a mat-list-item [routerLink]="['admin', 'hospital-details']" routerLinkActive="active">Hospitals</a>
+        <a mat-list-item [routerLink]="['admin', 'donations']" routerLinkActive="active">Donations</a>
+        <a mat-list-item [routerLink]="['admin', 'requests']" routerLinkActive="active">Requests</a>
+        <a mat-list-item [routerLink]="['admin', 'request-history']" routerLinkActive="active">Request History</a>
+        <a mat-list-item [routerLink]="['admin', 'blood-stock']" routerLinkActive="active">Blood Stock</a>
+    </mat-nav-list>
+    <router-outlet content></router-outlet>
+</app-sidenav>
+<app-sidenav *ngIf="getRole() === 'ROLE_DONOR'">
+    <mat-nav-list list>
+        <a mat-list-item [routerLink]="['donor']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+        <a mat-list-item [routerLink]="['donor', 'donate']" routerLinkActive="active">Donate Blood</a>
+        <a mat-list-item [routerLink]="['donor', 'history']" routerLinkActive="active">Donation History</a>
+        <a mat-list-item [routerLink]="['donor', 'profile']" routerLinkActive="active">Your Profile</a>
+    </mat-nav-list>
+    <router-outlet content></router-outlet>
+</app-sidenav>
+<app-sidenav *ngIf="getRole() === 'ROLE_HOSPITAL'">
+    <mat-nav-list list>
+        <a mat-list-item [routerLink]="['hospital']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
         <a mat-list-item [routerLink]="['hospital', 'request']" routerLinkActive="active">Make Request</a>
         <a mat-list-item [routerLink]="['hospital', 'history']" routerLinkActive="active">Request History</a>
         <a mat-list-item [routerLink]="['hospital', 'profile']" routerLinkActive="active">Your Profile</a>

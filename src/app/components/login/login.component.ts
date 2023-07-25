@@ -28,6 +28,7 @@ export class LoginComponent {
         // console.log(responseData);
         this.localStorageService.set('jwt',responseData);
         this.jwtTokenService.setToken(responseData);
+        localStorage.setItem('username', form.value.username);
         this.authService.login();
         let role = this.jwtTokenService.getRole();
         if(role === 'ROLE_DONOR'){

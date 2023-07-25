@@ -14,4 +14,12 @@ export class AppComponent {
   title = 'blood-bank-frontend';
   isLoggedIn$ = this.authService.isLoggedIn();
   role$ = this.authService.getRole();
+
+  getJwt() {
+    return localStorage.getItem('jwt');
+  }
+
+  getRole() {
+    return localStorage.getItem('role');
+  }
 }

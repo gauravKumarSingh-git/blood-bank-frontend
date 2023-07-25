@@ -1,0 +1,125 @@
+<h2>Your Profile</h2>
+
+<div class="container col-xs-10 col-md-6">
+  <div *ngIf="hospitalDetails$ | async as hospitalDetails">
+    <div class="row">
+      <div class="col-6 type">Username</div>
+      <div class="col-6">{{ hospitalDetails.username }}</div>
+    </div>
+    <div class="row">
+      <div class="col-6 type">Email</div>
+      <div class="col-6">{{ hospitalDetails.email }}</div>
+    </div>
+    <div class="row">
+      <div class="col-6 type">State</div>
+      <div class="col-6">{{ hospitalDetails.state }}</div>
+    </div>
+    <div class="row">
+      <div class="col-6 type">City</div>
+      <div class="col-6">{{ hospitalDetails.city }}</div>
+    </div>
+    <div class="row">
+      <div class="col-6 type">Address</div>
+      <div class="col-6">{{ hospitalDetails.address }}</div>
+    </div>
+    <div class="row">
+      <div class="col-6 type">Phone number</div>
+      <div class="col-6">{{ hospitalDetails.phoneNumber }}</div>
+    </div>
+    <div class="btn-div">
+      <button class="btn btn-primary" type="button" (click)="open(content)">
+        Edit
+      </button>
+    </div>
+  </div>
+</div>
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title col-10" id="modal-basic-title">Profile update</h4>
+    <button
+      type="button"
+      class="btn-close col-2"
+      style="width: 20px"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body" *ngIf="hospitalDetails$ | async as hospitalDetails">
+    <form class="form" [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username" class="form-label">Username</label>
+        <input
+          type="text"
+          class="form-control"
+          id="username"
+          name="username"
+          disabled
+          [placeholder]="hospitalDetails.username"
+        />
+      </div>
+      <div class="form-group">
+        <label for="email" class="form-label">Email</label>
+        <input 
+          type="email" 
+          class="form-control" 
+          [value]="hospitalDetails.email"
+          formControlName="email" />
+      </div>
+      <div class="form-group">
+        <label for="state" class="form-label">State</label>
+        <input
+          type="text"
+          id="state"
+          name="state"
+          class="form-control"
+          [value]="hospitalDetails.state"
+          formControlName="state"
+        />
+      </div>
+      <div class="form-group">
+        <label for="city" class="form-label">City</label>
+        <input
+          type="text"
+          id="city"
+          name="city"
+          class="form-control"
+          [value]="hospitalDetails.city"
+          formControlName="city"
+        />
+      </div>
+      <div class="form-group">
+        <label for="address" class="form-label">Address</label>
+        <input
+          type="text"
+          id="address"
+          name="address"
+          class="form-control"
+          [value]="hospitalDetails.address"
+          formControlName="address"
+        />
+      </div>
+      <div class="form-group">
+        <label for="phoneNumber" class="form-label">PhoneNumber</label>
+        <input
+          type="number"
+          id="phoneNumber"
+          name="phoneNumber"
+          class="form-control"
+          [value]="hospitalDetails.phoneNumber"
+          formControlName="phoneNumber"
+        />
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark">Update</button>
+  </div>
+</ng-template>
+
+<!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">
+  Launch demo modal
+</button> -->
+
+<!-- <hr />
+
+<pre>{{ closeResult }}</pre> -->

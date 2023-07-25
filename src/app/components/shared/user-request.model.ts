@@ -5,6 +5,7 @@ export class UserRequest{
     city: string;
     address: string;
     phoneNumber: string;
+    requestId: string;
     bloodGroup: string;
     quantity: string;
     date: string;

@@ -29,6 +29,8 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { AuthInterceptorService } from './auth-interceptor.service';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -60,6 +62,8 @@ import { AuthInterceptorService } from './auth-interceptor.service';
     NgbModule,
     MatSidenavModule,
     MatListModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     {

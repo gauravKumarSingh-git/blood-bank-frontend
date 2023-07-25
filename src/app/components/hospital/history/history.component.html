@@ -1,0 +1,32 @@
+<h2>Request History</h2>
+<div class="table-cover">
+    <table class="table table-striped"
+        *ngIf="requests$ | async as requests">
+        <thead>
+          <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Blood Group</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let request of requests; index as i">
+            <th scope="row">{{i+1}}</th>
+            <td>{{ request.bloodGroup }}</td>
+            <td>{{ request.quantity }}</td>
+            <td>{{ request.date }}</td>
+            <td 
+                [ngClass]="{
+                    'text-success': request.status === 'accepted',
+                    'text-warning': request.status === 'pending',
+                    'text-danger': request.status === 'rejected'
+                }"
+                >{{ request.status.toUpperCase() }}</td>
+          </tr>
+        </tbody>
+    </table>
+</div>
+
+

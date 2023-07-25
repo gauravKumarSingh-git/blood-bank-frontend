@@ -1,0 +1,32 @@
+<h2>Donation History</h2>
+<div class="table-cover">
+    <table class="table table-striped"
+        *ngIf="donations$ | async as donations">
+        <thead>
+          <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Blood Group</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let donation of donations; index as i">
+            <th scope="row">{{i+1}}</th>
+            <td>{{ donation.bloodGroup }}</td>
+            <td>{{ donation.quantity }}</td>
+            <td>{{ donation.date }}</td>
+            <td 
+                [ngClass]="{
+                    'text-success': donation.status === 'accepted',
+                    'text-warning': donation.status === 'pending',
+                    'text-danger': donation.status === 'rejected'
+                }"
+                >{{ donation.status.toUpperCase() }}</td>
+          </tr>
+        </tbody>
+    </table>
+</div>
+
+

@@ -4,12 +4,13 @@ table {
 }
 
 .table-cover {
-    overflow-x: scroll;
+    overflow: scroll;
     margin: 20px;
-    height: 100vh;
 }
+
 h2{
     text-align: center;
     margin: 20px;
 }
+
 

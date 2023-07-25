@@ -1,0 +1,159 @@
+<h2>Your Profile</h2>
+
+<div class="container col-xs-10 col-md-6">
+  <div *ngIf="donorDetails$ | async as donorDetails">
+    <div class="row">
+      <div class="col-6 type">Username</div>
+      <div class="col-6">{{ donorDetails.username }}</div>
+    </div>
+    <div class="row">
+      <div class="col-6 type">Email</div>
+      <div class="col-6">{{ donorDetails.email }}</div>
+    </div>
+    <div class="row">
+      <div class="col-6 type">Gender</div>
+      <div class="col-6">{{ donorDetails.gender }}</div>
+    </div>
+    <div class="row">
+      <div class="col-6 type">State</div>
+      <div class="col-6">{{ donorDetails.state }}</div>
+    </div>
+    <div class="row">
+      <div class="col-6 type">City</div>
+      <div class="col-6">{{ donorDetails.city }}</div>
+    </div>
+    <div class="row">
+      <div class="col-6 type">Address</div>
+      <div class="col-6">{{ donorDetails.address }}</div>
+    </div>
+    <div class="row">
+      <div class="col-6 type">Date of birth</div>
+      <div class="col-6">{{ donorDetails.dateOfBirth }}</div>
+    </div>
+    <div class="row">
+      <div class="col-6 type">Phone number</div>
+      <div class="col-6">{{ donorDetails.phoneNumber }}</div>
+    </div>
+    <div class="btn-div">
+      <button class="btn btn-primary" type="button" (click)="open(content)">
+        Edit
+      </button>
+    </div>
+  </div>
+</div>
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title col-10" id="modal-basic-title">Profile update</h4>
+    <button
+      type="button"
+      class="btn-close col-2"
+      style="width: 20px"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body" *ngIf="donorDetails$ | async as donorDetails">
+    <form class="form" [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username" class="form-label">Username</label>
+        <input
+          type="text"
+          class="form-control"
+          id="username"
+          name="username"
+          disabled
+          [placeholder]="donorDetails.username"
+        />
+      </div>
+      <div class="form-group">
+        <label for="email" class="form-label">Email</label>
+        <input 
+          type="email" 
+          class="form-control" 
+          [value]="donorDetails.email"
+          formControlName="email" />
+      </div>
+      <div class="form-group">
+        <label for="gender" class="form-label">Gender</label>
+        <select 
+          name="gender" 
+          id="gender" 
+          class="form-control"
+          formControlName="gender">
+          <option [value]="donorDetails.gender" disabled hidden>
+            {{ donorDetails.gender }}
+          </option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="ohters">Others</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="state" class="form-label">State</label>
+        <input
+          type="text"
+          id="state"
+          name="state"
+          class="form-control"
+          [value]="donorDetails.state"
+          formControlName="state"
+        />
+      </div>
+      <div class="form-group">
+        <label for="city" class="form-label">City</label>
+        <input
+          type="text"
+          id="city"
+          name="city"
+          class="form-control"
+          [value]="donorDetails.city"
+          formControlName="city"
+        />
+      </div>
+      <div class="form-group">
+        <label for="address" class="form-label">Address</label>
+        <input
+          type="text"
+          id="address"
+          name="address"
+          class="form-control"
+          [value]="donorDetails.address"
+          formControlName="address"
+        />
+      </div>
+      <div class="form-group">
+        <label for="dateOfBirth" class="form-label">Date of Birth</label>
+        <input
+          type="date"
+          id="dateOfBirth"
+          name="dateOfBirth"
+          class="form-control"
+          [value]="donorDetails.dateOfBirth"
+          formControlName="dateOfBirth"
+        />
+      </div>
+      <div class="form-group">
+        <label for="phoneNumber" class="form-label">PhoneNumber</label>
+        <input
+          type="number"
+          id="phoneNumber"
+          name="phoneNumber"
+          class="form-control"
+          [value]="donorDetails.phoneNumber"
+          formControlName="phoneNumber"
+        />
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark">Update</button>
+  </div>
+</ng-template>
+
+<!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">
+  Launch demo modal
+</button> -->
+
+<!-- <hr />
+
+<pre>{{ closeResult }}</pre> -->

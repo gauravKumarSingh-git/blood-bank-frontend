@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { environment } from 'src/app/environments/environment';
 import { AppConstants } from 'src/app/constants/app.constants';
 import { catchError, map, Observable, tap, throwError } from 'rxjs';
-import { User } from '../shared/user.model';
+import { User } from '../../shared/user.model';
 
 @Component({
   selector: 'app-donor-details',

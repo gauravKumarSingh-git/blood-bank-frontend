@@ -214,6 +214,16 @@
       </div>
       <div class="row">
         <mat-form-field class="col-4">
+          <mat-label>Date Of Birth</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dobCtrl" placeholder="Enter your Date of Birth">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error
+            *ngIf="userDetailsFormGroup.get('dobCtrl')?.hasError('required')">
+                Please provide DOB
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-4">
           <mat-label>Mobile Number</mat-label>
           <input matInput type="number" formControlName="mnoCtrl" placeholder="Enter your Mobile Number">
           <mat-error

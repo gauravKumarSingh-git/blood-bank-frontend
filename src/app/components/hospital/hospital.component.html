@@ -1,1 +1,20 @@
-<p>hospital works!</p>
+<div class="container">
+    <div class="row">
+        <div class="custom-card" style="background-color: rgb(228, 228, 247);">
+            Request Made: 
+            {{ requests.length }}
+        </div>
+        <div class="custom-card" style="background-color: rgb(251, 251, 225);">
+            Pending Request: 
+            {{ pendingRequests }}
+        </div>
+        <div class="custom-card" style="background-color: rgb(225, 248, 225);">
+            Approved Request: 
+            {{ acceptedRequests }}
+        </div>
+        <div class="custom-card" style="background-color: rgb(247, 204, 204);">
+            Rejected Request: 
+            {{ rejectedRequests }}
+        </div>
+    </div>
+</div>

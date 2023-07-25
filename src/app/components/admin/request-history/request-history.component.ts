@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, combineLatest, map, Observable, tap, throwError} from 'rxjs';
 import { AppConstants } from 'src/app/constants/app.constants';
 import { environment } from 'src/app/environments/environment';
-import { UserRequest } from '../shared/user-request.model';
+import { UserRequest } from '../../shared/user-request.model';
 
 @Component({
   selector: 'app-request-history',
@@ -40,7 +40,8 @@ export class RequestHistoryComponent {
   ]).pipe(
     map(([accepted, rejected]) => {
       return [...accepted, ...rejected];
-    })
+    }),
+    map((request) => request.sort((a, b) => b.date.localeCompare(a.date)))
   )
 
   private handleError(err: HttpErrorResponse): Observable<never> {

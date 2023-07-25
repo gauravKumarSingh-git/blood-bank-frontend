@@ -22,6 +22,11 @@ export class AuthGaurd implements CanActivate, CanActivateChild{
                 return true;
             }
         }
+        // if(localStorage.getItem('jwt')){
+        //     if(route.data["role"] === localStorage.getItem('role')){
+        //         return true;
+        //     }
+        // }
         this.router.navigate(['/login']);
         return false;
     }

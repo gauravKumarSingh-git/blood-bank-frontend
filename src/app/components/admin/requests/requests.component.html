@@ -1,7 +1,11 @@
 <h2>Blood Requests</h2>
-<div class="table-cover">
+<div *ngIf="successMessage" class="text-success">{{ successMessage }}</div>
+<div *ngIf="errorMessage" class="alert alert-danger" style="text-align: center; width: 30%; margin-left: auto; margin-right: 50px;">{{ errorMessage }}</div>
+<div class="table-cover" *ngIf="requests$ | async as requests">
+    <h2 style="text-align: center;" *ngIf="!(requests.length > 0)">No Requests Found!</h2>
+
     <table class="table table-striped"
-        *ngIf="requests$ | async as requests">
+        *ngIf="requests.length > 0">
         <thead>
           <tr>
             <th scope="col">S.No</th>
@@ -30,8 +34,16 @@
             <td>{{ request.quantity }}</td>
             <td>{{ request.date }}</td>
             <td>{{ request.status }}</td>
-            <td><button type="button" class="btn btn-success">Accept</button></td>
-            <td><button type="button" class="btn btn-danger">Reject</button></td>
+            <td>
+              <button type="button" class="btn btn-success" (click)="onAccept(request)" >
+                Accept 
+              </button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-danger" (click)="onReject(request)">
+                Reject
+              </button>
+            </td>
           </tr>
         </tbody>
     </table>

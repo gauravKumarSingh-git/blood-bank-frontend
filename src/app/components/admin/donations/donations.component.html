@@ -1,7 +1,11 @@
 <h2>Donations</h2>
-<div class="table-cover">
+<div *ngIf="successMessage" class="text-success">{{ successMessage }}</div>
+<div *ngIf="errorMessage" class="text-danger">{{ errorMessage }}</div>
+<div class="table-cover" *ngIf="donations$ | async as donations">
+    <h2 style="text-align: center;" *ngIf="!(donations.length > 0)">No Donations Found!</h2>
+
     <table class="table table-striped"
-        *ngIf="donations$ | async as donations">
+        *ngIf="donations.length > 0">
         <thead>
           <tr>
             <th scope="col">S.No</th>
@@ -30,8 +34,8 @@
             <td>{{ donation.quantity }}</td>
             <td>{{ donation.date }}</td>
             <td>{{ donation.status }}</td>
-            <td><button type="button" class="btn btn-success">Accept</button></td>
-            <td><button type="button" class="btn btn-danger">Reject</button></td>
+            <td><button type="button" class="btn btn-success" (click)="onAccept(donation)">Accept</button></td>
+            <td><button type="button" class="btn btn-danger" (click)="onReject(donation)">Reject</button></td>
           </tr>
         </tbody>
     </table>
