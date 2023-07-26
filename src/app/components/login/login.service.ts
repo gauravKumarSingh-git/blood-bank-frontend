@@ -10,6 +10,7 @@ export class LoginService {
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string) {
+    console.log(username, password);
     const postData = { username: username, password: password };
     return this.http.post(environment.rooturl + AppConstants.USER_API_URL + '/authenticate', postData, {
       responseType: 'text',

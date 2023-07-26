@@ -1,7 +1,8 @@
 <h2>Donation History</h2>
-<div class="table-cover">
+<div class="table-cover" *ngIf="donations$ | async as donations">
+    <h2 style="text-align: center;" *ngIf="!(donations.length > 0)">No Donations Found!</h2>
     <table class="table table-striped"
-        *ngIf="donations$ | async as donations">
+    *ngIf="(donations.length > 0)">
         <thead>
           <tr>
             <th scope="col">S.No</th>

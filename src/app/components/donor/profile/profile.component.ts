@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, resolveForwardRef } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { NgbModal, NgbToast } from '@ng-bootstrap/ng-bootstrap';
 import { AppConstants } from 'src/app/constants/app.constants';
 import { environment } from 'src/app/environments/environment';
 import { User } from '../../shared/user.model';
@@ -22,7 +23,7 @@ export class ProfileComponent implements OnInit{
   closeResult = '';
   updateForm : FormGroup;
 
-  constructor(private donorService: DonorService, private modalService: NgbModal, private http: HttpClient) {}
+  constructor(private donorService: DonorService, private modalService: NgbModal, private http: HttpClient, private _snackBar: MatSnackBar) {}
   
   ngOnInit(): void {
 
@@ -30,6 +31,9 @@ export class ProfileComponent implements OnInit{
       (data) => {
         this.donor = data
         this.updateForm = new FormGroup({
+          'userId': new FormControl(this.donor.userId, [Validators.required]),
+          'username': new FormControl(this.donor.username, [Validators.required]),
+          'password': new FormControl(this.donor.password, [Validators.required]),
           'email': new FormControl(this.donor.email, [Validators.required]),
           'gender': new FormControl(this.donor.gender, [Validators.required]),
           'state': new FormControl(this.donor.state, [Validators.required]),
@@ -37,6 +41,8 @@ export class ProfileComponent implements OnInit{
           'address': new FormControl(this.donor.address, [Validators.required]),
           'dateOfBirth': new FormControl(this.donor.dateOfBirth, [Validators.required]),
           'phoneNumber': new FormControl(this.donor.phoneNumber, [Validators.required]),
+          'role': new FormControl(this.donor.role, [Validators.required]),
+          'requests': new FormControl(this.donor.requests, [Validators.required])
         })
       }
     )
@@ -53,8 +59,25 @@ export class ProfileComponent implements OnInit{
 	}
 
   onSubmit(){
-
-    // modal.close('Save click');
+    console.log(this.updateForm.value);
+    this.http.put(environment.rooturl + AppConstants.USER_API_URL + "/updateUser",
+      this.updateForm.value,
+      { responseType: 'text' }
+    ).subscribe(
+      async (response) => {
+        console.log(response);
+        this._snackBar.open(response, 'close', { duration: 3000 })
+        // let promise = new Promise((resolve, reject) => {
+        //   setTimeout(() => resolve("done!"), 1000)
+        // });
+      
+        // let result = await promise;
+        location.reload();
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
   }
 
 }

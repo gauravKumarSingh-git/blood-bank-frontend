@@ -7,3 +7,33 @@
   margin-top: 16px;
 }
 
+
+.custom-container {
+  margin: 20px auto;
+  border: 1px solid rgb(192, 189, 189);
+  border-radius: 5px;
+  padding: 10px;
+  align-items: center;
+  box-shadow: 2px 3px 10px rgb(117, 117, 117);;
+}
+
+.custom-row{
+  border-bottom: 1px solid rgb(192, 189, 189);
+  padding: 5px;
+  margin: 5px;
+  display: flex;
+}
+
+.type {
+  font-weight: bold;
+}
+
+h2{
+  text-align: center;
+  margin-top: 20px;
+}
+
+.btn-div{
+  display: flex;
+  justify-content: center;
+}

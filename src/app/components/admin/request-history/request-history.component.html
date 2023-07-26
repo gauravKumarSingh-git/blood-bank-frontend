@@ -1,6 +1,7 @@
 <h2>Request History</h2>
-<div class="table-cover">
-  <table class="table table-striped" *ngIf="requests$ | async as requests">
+<div class="table-cover" *ngIf="requests$ | async as requests">
+  <h2 style="text-align: center;" *ngIf="!(requests.length > 0)">No Requests Found!</h2>
+  <table class="table table-striped" *ngIf="requests.length > 0">
     <thead>
       <tr>
         <th scope="col">S.No</th>

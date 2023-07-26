@@ -22,13 +22,15 @@ export class LoginComponent {
     private authService: AuthService
   ) {}
 
-  onSubmit(form: NgForm) {
+  async onSubmit(form: NgForm) {
+    console.log(form.value);
+    
     this.loginService.login(form.value.username, form.value.password).subscribe(
       (responseData) => {
         // console.log(responseData);
         this.localStorageService.set('jwt',responseData);
-        this.jwtTokenService.setToken(responseData);
         localStorage.setItem('username', form.value.username);
+        this.jwtTokenService.setToken(responseData);
         this.authService.login();
         let role = this.jwtTokenService.getRole();
         if(role === 'ROLE_DONOR'){

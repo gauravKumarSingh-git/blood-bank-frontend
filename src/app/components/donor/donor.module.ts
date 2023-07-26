@@ -9,7 +9,7 @@ import { DonationHistoryComponent } from './donation-history/donation-history.co
 import { ProfileComponent } from './profile/profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalDismissReasons, NgbDatepickerModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -24,7 +24,8 @@ import { ModalDismissReasons, NgbDatepickerModule, NgbModal } from '@ng-bootstra
     DonorRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbDatepickerModule
+    NgbDatepickerModule,
+    MatSnackBarModule
   ]
 })
 export class DonorModule { }

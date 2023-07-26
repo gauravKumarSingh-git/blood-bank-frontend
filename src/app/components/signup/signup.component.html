@@ -20,8 +20,8 @@
         <mat-form-field class="col-6">
           <mat-label>Select Role</mat-label>
           <mat-select matInput formControlName="roleCtrl" placeholder="Select your Role">
-            <mat-option value="donor">Donor</mat-option>
-            <mat-option value="hospital">Hospital</mat-option>
+            <mat-option value="ROLE_DONOR">Donor</mat-option>
+            <mat-option value="ROLE_HOSPITAL">Hospital</mat-option>
           </mat-select>
           <mat-error
             *ngIf="usernameFormGroup.get('roleCtrl')?.touched &&
@@ -153,42 +153,42 @@
         <mat-form-field class="col-4">
           <mat-label>State</mat-label>
           <mat-select matInput formControlName="stateCtrl" placeholder="Select your State">
-            <mat-option value="AP">Andhra Pradesh</mat-option>
-            <mat-option value="AR">Arunachal Pradesh</mat-option>
-            <mat-option value="AS">Assam</mat-option>
-            <mat-option value="BR">Bihar</mat-option>
-            <mat-option value="CT">Chhattisgarh</mat-option>
-            <mat-option value="GA">Gujarat</mat-option>
-            <mat-option value="HR">Haryana</mat-option>
-            <mat-option value="HP">Himachal Pradesh</mat-option>
-            <mat-option value="JK">Jammu and Kashmir</mat-option>
-            <mat-option value="GA">Goa</mat-option>
-            <mat-option value="JH">Jharkhand</mat-option>
-            <mat-option value="KA">Karnataka</mat-option>
-            <mat-option value="KL">Kerala</mat-option>
-            <mat-option value="MP">Madhya Pradesh</mat-option>
-            <mat-option value="MH">Maharashtra</mat-option>
-            <mat-option value="MN">Manipur</mat-option>
-            <mat-option value="ML">Meghalaya</mat-option>
-            <mat-option value="MZ">Mizoram</mat-option>
-            <mat-option value="NL">Nagaland</mat-option>
-            <mat-option value="OR">Odisha</mat-option>
-            <mat-option value="PB">Punjab</mat-option>
-            <mat-option value="RJ">Rajasthan</mat-option>
-            <mat-option value="SK">Sikkim</mat-option>
-            <mat-option value="TN">Tamil Nadu</mat-option>
-            <mat-option value="TG">Telangana</mat-option>
-            <mat-option value="TR">Tripura</mat-option>
-            <mat-option value="UT">Uttarakhand</mat-option>
-            <mat-option value="UP">Uttar Pradesh</mat-option>
-            <mat-option value="WB">West Bengal</mat-option>
-            <mat-option value="AN">Andaman and Nicobar Islands</mat-option>
-            <mat-option value="CH">Chandigarh</mat-option>
-            <mat-option value="DN">Dadra and Nagar Haveli</mat-option>
-            <mat-option value="DD">Daman and Diu</mat-option>
-            <mat-option value="DL">Delhi</mat-option>
-            <mat-option value="LD">Lakshadweep</mat-option>
-            <mat-option value="PY">Puducherry</mat-option>
+            <mat-option value="Andhra Pradesh">Andhra Pradesh</mat-option>
+            <mat-option value="Arunachal Pradesh">Arunachal Pradesh</mat-option>
+            <mat-option value="Assam">Assam</mat-option>
+            <mat-option value="Bihar">Bihar</mat-option>
+            <mat-option value="Chhattisgarh">Chhattisgarh</mat-option>
+            <mat-option value="Gujarat">Gujarat</mat-option>
+            <mat-option value="Haryana">Haryana</mat-option>
+            <mat-option value="Himachal Pradesh">Himachal Pradesh</mat-option>
+            <mat-option value="Jammu and Kashmir">Jammu and Kashmir</mat-option>
+            <mat-option value="Goa">Goa</mat-option>
+            <mat-option value="Jharkhand">Jharkhand</mat-option>
+            <mat-option value="Karnataka">Karnataka</mat-option>
+            <mat-option value="Kerala">Kerala</mat-option>
+            <mat-option value="Madhya Pradesh">Madhya Pradesh</mat-option>
+            <mat-option value="Maharashtra">Maharashtra</mat-option>
+            <mat-option value="Manipur">Manipur</mat-option>
+            <mat-option value="Meghalaya">Meghalaya</mat-option>
+            <mat-option value="Mizoram">Mizoram</mat-option>
+            <mat-option value="Nagaland">Nagaland</mat-option>
+            <mat-option value="Odisha">Odisha</mat-option>
+            <mat-option value="Punjab">Punjab</mat-option>
+            <mat-option value="Rajasthan">Rajasthan</mat-option>
+            <mat-option value="Sikkim">Sikkim</mat-option>
+            <mat-option value="Tamil Nadu">Tamil Nadu</mat-option>
+            <mat-option value="Telangana">Telangana</mat-option>
+            <mat-option value="Tripura">Tripura</mat-option>
+            <mat-option value="Uttarakhand">Uttarakhand</mat-option>
+            <mat-option value="Uttar Pradesh">Uttar Pradesh</mat-option>
+            <mat-option value="West Bengal">West Bengal</mat-option>
+            <mat-option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</mat-option>
+            <mat-option value="Chandigarh">Chandigarh</mat-option>
+            <mat-option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</mat-option>
+            <mat-option value="Daman and Diu">Daman and Diu</mat-option>
+            <mat-option value="Delhi">Delhi</mat-option>
+            <mat-option value="Lakshadweep">Lakshadweep</mat-option>
+            <mat-option value="Puducherry">Puducherry</mat-option>
           </mat-select>
           <mat-error
             *ngIf="userDetailsFormGroup.get('stateCtrl')?.hasError('required')">
@@ -213,7 +213,7 @@
         </mat-form-field>
       </div>
       <div class="row">
-        <mat-form-field class="col-4">
+        <mat-form-field class="col-4"  *ngIf="usernameFormGroup.get('roleCtrl')?.value==='donor'">
           <mat-label>Date Of Birth</mat-label>
           <input matInput [matDatepicker]="picker" formControlName="dobCtrl" placeholder="Enter your Date of Birth">
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
@@ -245,10 +245,56 @@
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
+    <h2>Your Details</h2>
+    <div class="custom-container col-xs-10 col-md-6">
+      <div>
+        <div class="custom-row">
+          <div class="col-6 type">Username</div>
+          <div class="col-6">{{ usernameFormGroup.get('usernameCtrl')?.value }}</div>
+        </div>
+        <div class="custom-row">
+          <div class="col-6 type">Role</div>
+          <div class="col-6">{{ usernameFormGroup.get('roleCtrl')?.value }}</div>
+        </div>
+        <div class="custom-row">
+          <div class="col-6 type">Name</div>
+          <div class="col-6">{{ userDetailsFormGroup.get('nameCtrl')?.value }}</div>
+        </div>
+        <div class="custom-row">
+          <div class="col-6 type">Email</div>
+          <div class="col-6">{{ userDetailsFormGroup.get('emailCtrl')?.value }}</div>
+        </div>
+        <div class="custom-row"  *ngIf="usernameFormGroup.get('roleCtrl')?.value==='donor'">
+          <div class="col-6 type">Gender</div>
+          <div class="col-6">{{ userDetailsFormGroup.get('genderCtrl')?.value }}</div>
+        </div>
+        <div class="custom-row">
+          <div class="col-6 type">City</div>
+          <div class="col-6">{{ userDetailsFormGroup.get('cityCtrl')?.value }}</div>
+        </div>
+        <div class="custom-row">
+          <div class="col-6 type">State</div>
+          <div class="col-6">{{ userDetailsFormGroup.get('stateCtrl')?.value }}</div>
+        </div>
+        <div class="custom-row">
+          <div class="col-6 type">Address</div>
+          <div class="col-6">{{ userDetailsFormGroup.get('addressCtrl')?.value }}</div>
+        </div>
+        <div class="custom-row"  *ngIf="usernameFormGroup.get('roleCtrl')?.value==='donor'">
+          <div class="col-6 type">Date Of Birth</div>
+          <div class="col-6">{{ userDetailsFormGroup.get('dobCtrl')?.value }}</div>
+        </div>
+        <div class="custom-row">
+          <div class="col-6 type">Mobile Number</div>
+          <div class="col-6">{{ userDetailsFormGroup.get('mnoCtrl')?.value }}</div>
+        </div>
+      </div>
+    </div>
     <p>Submit Form?</p>
     <div>
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button (click)="stepper.reset()">Reset</button>
+      <button mat-button (click)="onSignupSubmit()">Submit</button>
     </div>
   </mat-step>
 </mat-stepper>
