@@ -31,7 +31,7 @@ import { MatListModule } from '@angular/material/list';
 import { AuthInterceptorService } from './auth-interceptor.service';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
-
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -64,7 +64,8 @@ import {MatNativeDateModule} from '@angular/material/core';
     MatSidenavModule,
     MatListModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSnackBarModule
   ],
   providers: [
     {

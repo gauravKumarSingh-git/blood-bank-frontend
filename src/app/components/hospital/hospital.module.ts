@@ -7,6 +7,8 @@ import { RequestComponent } from './request/request.component';
 import { HistoryComponent } from './history/history.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+
 
 
 @NgModule({
@@ -19,7 +21,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     HospitalRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSnackBarModule
   ]
 })
 export class HospitalModule { }

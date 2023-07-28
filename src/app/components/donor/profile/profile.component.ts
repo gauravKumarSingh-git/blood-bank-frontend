@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgbModal, NgbToast } from '@ng-bootstrap/ng-bootstrap';
 import { AppConstants } from 'src/app/constants/app.constants';
 import { environment } from 'src/app/environments/environment';
+import { SnackbarService } from '../../shared/snackbar.service';
 import { User } from '../../shared/user.model';
 import { DonorService } from '../donor.service';
 
@@ -23,7 +24,11 @@ export class ProfileComponent implements OnInit{
   closeResult = '';
   updateForm : FormGroup;
 
-  constructor(private donorService: DonorService, private modalService: NgbModal, private http: HttpClient, private _snackBar: MatSnackBar) {}
+  constructor(private donorService: DonorService, 
+    private modalService: NgbModal, 
+    private http: HttpClient, 
+    private _snackBar: MatSnackBar,
+    private snackbarService: SnackbarService) {}
   
   ngOnInit(): void {
 
@@ -66,13 +71,12 @@ export class ProfileComponent implements OnInit{
     ).subscribe(
       async (response) => {
         console.log(response);
-        this._snackBar.open(response, 'close', { duration: 3000 })
-        // let promise = new Promise((resolve, reject) => {
-        //   setTimeout(() => resolve("done!"), 1000)
-        // });
-      
-        // let result = await promise;
-        location.reload();
+        this.snackbarService.showSnackbarMessage(response);
+        let promise = new Promise((resolve, reject) => {
+          setTimeout(() => resolve( location.reload()), 2000)
+        });
+          
+        let result = await promise;
       },
       (error) => {
         console.log(error);

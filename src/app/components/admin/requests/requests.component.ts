@@ -5,6 +5,7 @@ import { AppConstants } from 'src/app/constants/app.constants';
 import { environment } from 'src/app/environments/environment';
 import { UserRequest } from '../../shared/user-request.model';
 import { AuthService } from 'src/app/auth.service';
+import { SnackbarService } from '../../shared/snackbar.service';
 
 @Component({
   selector: 'app-requests',
@@ -27,7 +28,7 @@ export class RequestsComponent {
   successMessage=''
   errorMessage=''
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(private http: HttpClient, private authService: AuthService, private snackbarService: SnackbarService) {}
 
   requests$ = this.http.get<UserRequest[]>(this.getUserRequest).pipe(
     tap((data) => {
@@ -68,7 +69,8 @@ export class RequestsComponent {
       (error) => {
         console.log(error)
         if(error.status === 400){
-          this.errorMessage = 'Not Enough quantity present';
+          this.snackbarService.showSnackbarMessage("Not enough quantity present");
+          // this.errorMessage = 'Not Enough quantity present';
         }
         else {
           this.errorMessage = error.message;
