@@ -32,6 +32,7 @@ import { AuthInterceptorService } from './auth-interceptor.service';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { PasswordResetComponent } from './components/password-reset/password-reset.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     SignupComponent,
     LoginHeaderComponent,
     SidenavComponent,
+    PasswordResetComponent,
   ],
   imports: [
     BrowserModule,
