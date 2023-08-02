@@ -3,7 +3,50 @@
     padding: 0px;
 }
 
-img{
-    height: 60vh;
+.picsum-img-wrapper img{
+    height: 70vh;
     width: 100%;
 }
+
+.custom-container{
+    margin: 20px 30px;
+    padding: 50px;
+}
+
+.card-title{
+    font-size: 25px;
+}
+.card-body{
+    padding: 15px;
+}
+
+.image-group-heading{
+    font-size: 3rem;
+    line-height: 2.5rem;
+    color: rgb(74, 74, 74);
+    padding: 4px;
+    text-align: center;
+}
+
+.image-holder{
+    display: flex;
+    justify-content: space-around;
+}
+
+.footer{
+    background-color: black;
+    padding: 30px 40px;
+    color: white;
+    text-align: center;
+}
+
+.footer ul {
+    list-style: none;
+    
+}
+
+.footer a{
+    text-decoration: none;
+    color: white;
+}
+

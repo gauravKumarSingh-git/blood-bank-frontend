@@ -46,12 +46,7 @@ export class LoginComponent {
         if(this.errorMessage) this.errorMessage = '';
       },
       (error) => {
-        if (error.status === 400) {
-          this.errorMessage = 'Invalid Credentials';
-        } else {
-          this.errorMessage = error.message;
-          console.log(error);
-        }
+        this.errorMessage = JSON.parse(error.error).errorMessage;
       }
     );
   }

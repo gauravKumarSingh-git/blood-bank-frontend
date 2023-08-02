@@ -10,7 +10,8 @@ import { RequestHistoryComponent } from './request-history/request-history.compo
 import { DonationsComponent } from './donations/donations.component';
 import { RequestsComponent } from './requests/requests.component';
 import { BloodStockComponent } from './blood-stock/blood-stock.component'
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
 
 
@@ -23,12 +24,15 @@ import { ReactiveFormsModule } from '@angular/forms';
     DonationsComponent,
     RequestsComponent,
     BloodStockComponent,
+    
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
     MatListModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatIconModule,
+    FormsModule
   ]
 })
 export class AdminModule { }

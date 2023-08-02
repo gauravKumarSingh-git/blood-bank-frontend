@@ -30,10 +30,10 @@
             <td>{{ request.state }}</td>
             <td>{{ request.address }}</td>
             <td>{{ request.phoneNumber }}</td>
-            <td>{{ request.bloodGroup }}</td>
+            <td class="text-danger">{{ request.bloodGroup }}</td>
             <td>{{ request.quantity }}</td>
             <td>{{ request.date }}</td>
-            <td>{{ request.status }}</td>
+            <td class="text-warning">{{ request.status }}</td>
             <td>
               <button type="button" class="btn btn-success" (click)="onAccept(request)" >
                 Accept 

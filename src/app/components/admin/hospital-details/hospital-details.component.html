@@ -1,7 +1,7 @@
 <h2>Hospital Details</h2>
 <div class="table-cover">
     <table class="table table-striped"
-        *ngIf="hospitals$ | async as hospitals">
+       >
         <thead>
           <tr>
             <th scope="col">S.No</th>
@@ -23,12 +23,20 @@
             <td>{{ hospital.city }}</td>
             <td>{{ hospital.address }}</td>
             <td>{{ hospital.phoneNumber }}</td>
-            <td><button class="btn btn-primary" type="button" (click)="open(content, hospital)">Edit</button></td>
+            <td>
+              <button 
+                class="btn" 
+                type="button" 
+                (click)="open(content, hospital)">
+                <mat-icon [ngStyle]="{'color':'green'}">edit</mat-icon>
+
+              </button>
+            </td>
           </tr>
         </tbody>
     </table>
 </div>
-<nav aria-label="Page navigation example" style="align-items: right;">
+<!-- <nav aria-label="Page navigation example" style="align-items: right;">
     <ul class="pagination">
       <li class="page-item"><a class="page-link" href="#">Previous</a></li>
       <li 
@@ -37,7 +45,25 @@
         <a class="page-link" href="#">{{ i+1 }}</a></li>
       <li class="page-item"><a class="page-link" href="#">Next</a></li>
     </ul>
-</nav>
+</nav> -->
+
+<div class="pagination">
+  <button class="page-change-button" (click)="previousPage()">
+    <mat-icon class="material-symbols-outlined">
+    chevron_left
+    </mat-icon>
+  </button>
+  <form class="page-cover" #pageForm="ngForm" (ngSubmit)="onPageChange(pageForm)">
+    Page 
+    <input type="number" class="page-input" ngModel id="page" name="page" [placeholder]="page">
+    <span>of {{totalPages}}</span>
+  </form>
+  <button class="page-change-button" (click)="nextPage()">
+    <mat-icon class="material-symbols-outlined">
+      chevron_right
+    </mat-icon>
+  </button>
+</div>
 
 <ng-template #content let-modal>
   <div class="modal-header">

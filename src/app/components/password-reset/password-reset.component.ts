@@ -50,7 +50,7 @@ export class PasswordResetComponent {
           this.isOtpSent = false;
           this.sending = false;
           console.log(error);
-          this.snackbarService.showSnackbarMessage('Username not found');
+          this.snackbarService.showSnackbarMessage(JSON.parse(error.error).errorMessage);
         }
       );
   }

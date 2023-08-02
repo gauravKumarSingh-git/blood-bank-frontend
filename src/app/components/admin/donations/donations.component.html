@@ -30,10 +30,10 @@
             <td>{{ donation.state }}</td>
             <td>{{ donation.address }}</td>
             <td>{{ donation.phoneNumber }}</td>
-            <td>{{ donation.bloodGroup }}</td>
+            <td class="text-danger">{{ donation.bloodGroup }}</td>
             <td>{{ donation.quantity }}</td>
             <td>{{ donation.date }}</td>
-            <td>{{ donation.status }}</td>
+            <td class="text-warning">{{ donation.status }}</td>
             <td><button type="button" class="btn btn-success" (click)="onAccept(donation)">Accept</button></td>
             <td><button type="button" class="btn btn-danger" (click)="onReject(donation)">Reject</button></td>
           </tr>

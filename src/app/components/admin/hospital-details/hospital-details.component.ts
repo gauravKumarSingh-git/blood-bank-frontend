@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { catchError, map, Observable, tap, throwError } from 'rxjs';
@@ -8,57 +8,79 @@ import { AppConstants } from 'src/app/constants/app.constants';
 import { environment } from 'src/app/environments/environment';
 import { DonorService } from '../../donor/donor.service';
 import { User } from '../../shared/user.model';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-hospital-details',
   templateUrl: './hospital-details.component.html',
   styleUrls: ['./hospital-details.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HospitalDetailsComponent {
-  page: number = 0;
+export class HospitalDetailsComponent implements OnInit{
+  page: number = 1;
   totalPages: number;
   sortBy: string = 'username';
   // hospital: User;
   updateForm: FormGroup;
   closeResult = '';
-  hospitalDetails$ = this.donorService.donorDetails$;
+  role='ROLE_HOSPITAL';
+  hospitals: User[];
 
-  getHospitalsByRoleAndPageNo =
-    environment.rooturl +
-    AppConstants.USER_API_URL +
-    `/getUsersByRole/ROLE_HOSPITAL/${this.page}/${this.sortBy}`;
+  // getHospitalsByRoleAndPageNo =
+  //   environment.rooturl +
+  //   AppConstants.USER_API_URL +
+  //   `/getUsersByRole/${this.role}/${this.page}/${this.sortBy}`;
 
   constructor(
     private http: HttpClient,
-    private donorService: DonorService,
     private _snackBar: MatSnackBar,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private userService: UserService
   ) {}
 
-  hospitals$ = this.http
-    .get<{ [key: string]: Object }>(this.getHospitalsByRoleAndPageNo)
-    .pipe(
-      tap((data) => {
-        console.log(data);
-        this.totalPages = data['totalPages'] as number;
-      }),
-      map((data) => {
-        return data['content'] as User[];
-      }),
-      catchError(this.handleError)
-    );
 
-  private handleError(err: HttpErrorResponse): Observable<never> {
-    let errorMessage: string;
-    if (err.error instanceof ErrorEvent) {
-      errorMessage = `An error occurred: ${err.error.message}`;
-    } else {
-      errorMessage = `Backend returned code ${err.status}: ${err.message}`;
-    }
-    console.error(err);
-    return throwError(() => errorMessage);
+  ngOnInit(): void {
+    this.getUsersData();
   }
+
+  getUsersData() {
+    this.userService.getUsersByRoleAndPageNo(this.role, this.page-1, this.sortBy)
+      .subscribe(
+        (data) => {
+          this.hospitals = data;
+          this.totalPages = this.userService.totalPages;
+          console.log(this.hospitals);
+        },
+        (error) => console.log(error)
+      )
+  }
+
+  // hospitals$ = this.http
+  //   .get<{ [key: string]: Object }>(this.getHospitalsByRoleAndPageNo)
+  //   .pipe(
+  //     tap((data) => {
+  //       console.log(data);
+  //       this.totalPages = data['totalPages'] as number;
+  //     }),
+  //     map((data) => {
+  //       return data['content'] as User[];
+  //     }),
+  //     catchError(this.handleError)
+  //   );
+
+  
+
+  // private handleError(err: HttpErrorResponse): Observable<never> {
+  //   let errorMessage: string;
+  //   if (err.error instanceof ErrorEvent) {
+  //     errorMessage = `An error occurred: ${err.error.message}`;
+  //   } else {
+  //     errorMessage = `Backend returned code ${err.status}: ${err.message}`;
+  //   }
+  //   console.error(err);
+  //   return throwError(() => errorMessage);
+  // }
+
+
 
   open(content: any, hospital: User) {
     console.log(hospital)
@@ -103,5 +125,42 @@ export class HospitalDetailsComponent {
           console.log(error);
         }
       );
+  }
+
+  previousPage(){
+    if(this.page > 1){
+      this.page -= 1;
+      this.getUsersData();
+      // this.donors$ = this.userService.getUsersByRoleAndPageNo(this.role, this.page, this.sortBy);
+    }
+  }
+
+  nextPage() {
+    if(this.page < this.totalPages){
+      this.page += 1;
+      this.getUsersData();
+      // this.donors$ = this.userService.getUsersByRoleAndPageNo(this.role, this.page, this.sortBy);
+    }
+  }
+
+  onPageChange(pageForm: NgForm){
+    if(pageForm.value['page']){
+      let requiredPage = pageForm.value['page'];
+      if(requiredPage < 1){
+        this.page = 1;
+        // this.getUsersData();
+      }
+      else if(requiredPage > this.totalPages){
+        this.page = this.totalPages;
+        // this.getUsersData();
+      }
+      else {
+        this.page = requiredPage;
+        // this.getUsersData();
+      }
+      this.getUsersData();
+      // this.donors$ = this.userService.getUsersByRoleAndPageNo(this.role, this.page, this.sortBy);
+    }
+    pageForm.reset();
   }
 }

@@ -10,6 +10,7 @@ import * as moment from 'moment';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/app/environments/environment';
 import { AppConstants } from 'src/app/constants/app.constants';
+import { SnackbarService } from '../shared/snackbar.service';
 
 
 @Component({
@@ -20,6 +21,7 @@ import { AppConstants } from 'src/app/constants/app.constants';
 export class SignupComponent implements OnInit {
   
   hide = true;
+  maxDate = moment(new Date()).subtract(8, 'years').format('YYYY-MM-DD')
   usernameFormGroup: FormGroup;
   passwordFormGroup: FormGroup;
   userDetailsFormGroup: FormGroup;
@@ -118,17 +120,20 @@ export class SignupComponent implements OnInit {
 
     this.http.post(`${environment.rooturl}${AppConstants.USER_API_URL}/registerUser`, 
       this.user,
-      { responseType: 'text' }
+      {responseType: 'text'}
     ).subscribe(
       (response) => {
         console.log(response);
+        this.snacbarService.showSnackbarMessage(response);
       },
       (error) => {
         console.log(error);
+        let errorMessage = JSON.parse(error.error).errorMessage;
+        this.snacbarService.showSnackbarMessage(errorMessage);
       }
     )
 
   }
 
-  constructor(private _formBuilder: FormBuilder, private http: HttpClient) {}
+  constructor(private _formBuilder: FormBuilder, private http: HttpClient, private snacbarService: SnackbarService) {}
 }

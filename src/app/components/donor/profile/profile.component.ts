@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, OnInit, resolveForwardRef } from '@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgbModal, NgbToast } from '@ng-bootstrap/ng-bootstrap';
+import * as moment from 'moment';
 import { AppConstants } from 'src/app/constants/app.constants';
 import { environment } from 'src/app/environments/environment';
 import { SnackbarService } from '../../shared/snackbar.service';
@@ -23,6 +24,7 @@ export class ProfileComponent implements OnInit{
   donorDetails$ = this.donorService.donorDetails$;
   closeResult = '';
   updateForm : FormGroup;
+  maxDate = moment(new Date()).subtract(8, 'years').format('YYYY-MM-DD')
 
   constructor(private donorService: DonorService, 
     private modalService: NgbModal, 

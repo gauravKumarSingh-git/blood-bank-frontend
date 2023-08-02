@@ -1,11 +1,20 @@
 <h2>Request History</h2>
+<div style="justify-content: right; display: flex; margin-right: 30px">
+  
+  <button class="btn btn-success d-flex" (click)="generateReport()">
+    <mat-icon>download</mat-icon>
+    <p style="margin: 0px;">Generate Report</p> 
+  </button>
+</div>
 <div class="table-cover" *ngIf="requests$ | async as requests">
   <h2 style="text-align: center;" *ngIf="!(requests.length > 0)">No Requests Found!</h2>
-  <table class="table table-striped" *ngIf="requests.length > 0">
+  <table id="excel-table" class="table table-striped" *ngIf="requests.length > 0">
     <thead>
       <tr>
         <th scope="col">S.No</th>
-        <th scope="col">Username</th>
+        <th scope="col" (click)="sortByUsername()">
+          Username
+        </th>
         <th scope="col">Email</th>
         <th scope="col">State</th>
         <th scope="col">Address</th>
@@ -24,7 +33,7 @@
         <td>{{ request.state }}</td>
         <td>{{ request.address }}</td>
         <td>{{ request.phoneNumber }}</td>
-        <td>{{ request.bloodGroup }}</td>
+        <td class="text-danger">{{ request.bloodGroup }}</td>
         <td>{{ request.quantity }}</td>
         <td>{{ request.date }}</td>
         <td

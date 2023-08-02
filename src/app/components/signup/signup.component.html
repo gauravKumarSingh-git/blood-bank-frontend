@@ -116,8 +116,8 @@
     <form [formGroup]="userDetailsFormGroup" class="container" (ngSubmit)="onUserDetailsSubmit()">
       <div class="row">
         <mat-form-field class="col-4">
-          <mat-label *ngIf="usernameFormGroup.get('roleCtrl')?.value!=='donor'">Hospital's Name</mat-label>
-          <mat-label *ngIf="usernameFormGroup.get('roleCtrl')?.value==='donor'">Name</mat-label>
+          <mat-label *ngIf="usernameFormGroup.get('roleCtrl')?.value!=='ROLE_DONOR'">Hospital's Name</mat-label>
+          <mat-label *ngIf="usernameFormGroup.get('roleCtrl')?.value==='ROLE_DONOR'">Name</mat-label>
           <input matInput type="text" formControlName="nameCtrl" placeholder="Enter Name">
           <mat-error
             *ngIf="userDetailsFormGroup.get('nameCtrl')?.hasError('required')">
@@ -136,7 +136,7 @@
                 Invalid email
           </mat-error>
         </mat-form-field>
-        <mat-form-field class="col-4" *ngIf="usernameFormGroup.get('roleCtrl')?.value==='donor'">
+        <mat-form-field class="col-4" *ngIf="usernameFormGroup.get('roleCtrl')?.value==='ROLE_DONOR'">
           <mat-label>Gender</mat-label>
           <mat-select matInput formControlName="genderCtrl" placeholder="Select your Gender">
             <mat-option value="MALE">Male</mat-option>
@@ -213,9 +213,9 @@
         </mat-form-field>
       </div>
       <div class="row">
-        <mat-form-field class="col-4"  *ngIf="usernameFormGroup.get('roleCtrl')?.value==='donor'">
+        <mat-form-field class="col-4"  *ngIf="usernameFormGroup.get('roleCtrl')?.value==='ROLE_DONOR'">
           <mat-label>Date Of Birth</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="dobCtrl" placeholder="Enter your Date of Birth">
+          <input matInput [matDatepicker]="picker" formControlName="dobCtrl" placeholder="Enter your Date of Birth" [max]="maxDate">
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
           <mat-error
@@ -264,7 +264,7 @@
           <div class="col-6 type">Email</div>
           <div class="col-6">{{ userDetailsFormGroup.get('emailCtrl')?.value }}</div>
         </div>
-        <div class="custom-row"  *ngIf="usernameFormGroup.get('roleCtrl')?.value==='donor'">
+        <div class="custom-row"  *ngIf="usernameFormGroup.get('roleCtrl')?.value==='ROLE_DONOR'">
           <div class="col-6 type">Gender</div>
           <div class="col-6">{{ userDetailsFormGroup.get('genderCtrl')?.value }}</div>
         </div>
@@ -280,7 +280,7 @@
           <div class="col-6 type">Address</div>
           <div class="col-6">{{ userDetailsFormGroup.get('addressCtrl')?.value }}</div>
         </div>
-        <div class="custom-row"  *ngIf="usernameFormGroup.get('roleCtrl')?.value==='donor'">
+        <div class="custom-row"  *ngIf="usernameFormGroup.get('roleCtrl')?.value==='ROLE_DONOR'">
           <div class="col-6 type">Date Of Birth</div>
           <div class="col-6">{{ userDetailsFormGroup.get('dobCtrl')?.value }}</div>
         </div>
@@ -290,11 +290,11 @@
         </div>
       </div>
     </div>
-    <p>Submit Form?</p>
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
-      <button mat-button (click)="onSignupSubmit()">Submit</button>
+    <p style="text-align: center;">Submit Form?</p>
+    <div style="display: flex; justify-content: center">
+      <button mat-button matStepperPrevious class="btn btn-primary">Back</button>
+      <button mat-button class="btn btn-danger" (click)="stepper.reset()">Reset</button>
+      <button mat-button class="btn btn-success" (click)="onSignupSubmit()">Submit</button>
     </div>
   </mat-step>
 </mat-stepper>
