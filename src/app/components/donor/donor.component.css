@@ -4,9 +4,27 @@
     margin: 10px;
     justify-content: center;
     display: flex;
+    flex-direction: column;
     width: 250px;
     background-color: white;
     border-radius: 5px;
     height: 100px;
     align-items: center;
+    transition: transform 0.5s ease;
+
+}
+
+.custom-card:hover{
+    padding: 5px;
+    margin: 10px;
+    border: 1px solid black;
+    transform: scale(1.07);
+}
+
+.container{
+    margin-top: 30px;
+}
+
+.row{
+    justify-content: center;
 }

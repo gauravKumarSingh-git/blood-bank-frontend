@@ -18,7 +18,7 @@
         <tbody>
           <tr *ngFor="let donor of donors; index as i">
             <th scope="row">{{(i+1) + (page-1)*elementsOnPage}}</th>
-            <td>{{ donor.username }}</td>
+            <td [ngStyle]="{'color': '#42429c'}">{{ donor.username }}</td>
             <td>{{ donor.email }}</td>
             <td>{{ donor.state }}</td>
             <td>{{ donor.city }}</td>

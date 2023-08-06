@@ -10,6 +10,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalDismissReasons, NgbDatepickerModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
+
 
 
 @NgModule({
@@ -25,7 +27,8 @@ import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
     FormsModule,
     ReactiveFormsModule,
     NgbDatepickerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatIconModule
   ]
 })
 export class DonorModule { }

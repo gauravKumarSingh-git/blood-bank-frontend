@@ -23,7 +23,7 @@ export class LoginComponent {
   ) {}
 
   async onSubmit(form: NgForm) {
-    console.log(form.value);
+    // console.log(form.value);
     
     this.loginService.login(form.value.username, form.value.password).subscribe(
       (responseData) => {
@@ -46,6 +46,7 @@ export class LoginComponent {
         if(this.errorMessage) this.errorMessage = '';
       },
       (error) => {
+        console.log(error);
         this.errorMessage = JSON.parse(error.error).errorMessage;
       }
     );

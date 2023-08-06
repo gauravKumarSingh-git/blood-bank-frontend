@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { filter, map } from 'rxjs';
+import { AuthService } from 'src/app/auth.service';
 import { Request } from '../shared/request.model';
 import { DonorService } from './donor.service';
 
@@ -15,7 +16,11 @@ export class DonorComponent implements OnInit {
   requests: Request[];
 
   constructor(private donorService: DonorService){}
+
+
+
   ngOnInit(): void {
+
     this.donorService.donorDetails$
     .pipe(
       map((data) => data.requests),

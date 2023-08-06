@@ -33,7 +33,7 @@
             <td class="text-danger">{{ request.bloodGroup }}</td>
             <td>{{ request.quantity }}</td>
             <td>{{ request.date }}</td>
-            <td class="text-warning">{{ request.status }}</td>
+            <td class="text-warning">{{ request.status.toUpperCase() }}</td>
             <td>
               <button type="button" class="btn btn-success" (click)="onAccept(request)" >
                 Accept 

@@ -8,6 +8,7 @@ import { HistoryComponent } from './history/history.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
 
 
 
@@ -22,7 +23,8 @@ import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
     CommonModule,
     HospitalRoutingModule,
     ReactiveFormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatIconModule
   ]
 })
 export class HospitalModule { }

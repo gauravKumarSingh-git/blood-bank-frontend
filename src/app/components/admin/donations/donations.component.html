@@ -33,7 +33,7 @@
             <td class="text-danger">{{ donation.bloodGroup }}</td>
             <td>{{ donation.quantity }}</td>
             <td>{{ donation.date }}</td>
-            <td class="text-warning">{{ donation.status }}</td>
+            <td class="text-warning">{{ donation.status.toUpperCase() }}</td>
             <td><button type="button" class="btn btn-success" (click)="onAccept(donation)">Accept</button></td>
             <td><button type="button" class="btn btn-danger" (click)="onReject(donation)">Reject</button></td>
           </tr>
