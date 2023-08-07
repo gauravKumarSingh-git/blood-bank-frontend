@@ -1,10 +1,23 @@
 <h2>Request History</h2>
-<div style="justify-content: right; display: flex; margin-right: 30px">
-  
-  <button class="btn btn-success d-flex" (click)="generateReport()">
+
+<div class="search-box d-flex row">
+  <form [formGroup]="searchForm" (ngSubmit)="onSearchFormSubmit(searchForm)" class="form d-flex col-md-6">
+    <label for="username">Search By Username</label>
+    <input type="text" id="username" name="username" class="form-control" formControlName="username">
+    <button type="button" class="btn" (click)="search()">
+      <mat-icon [ngStyle]="{'color': 'blue'}">search</mat-icon>
+    </button>
+    <button type="button" class="btn" (click)="clearSearch()">
+      <mat-icon [ngStyle]="{'color': '#ed6464'}">cancel</mat-icon>
+    </button>
+  </form>
+  <div class="col-xs-0 col-md-2"></div>
+  <div class="col-xs-12 col-md-4 d-flex" style="justify-content: right;">
+    <button class="btn btn-success d-flex p-2" (click)="generateReport()">
     <mat-icon>download</mat-icon>
     <p style="margin: 0px;">Generate Report</p> 
-  </button>
+    </button>
+  </div>
 </div>
 <div class="table-cover" *ngIf="requests$ | async as requests">
   <h2 style="text-align: center;" *ngIf="!(requests.length > 0)">No Requests Found!</h2>

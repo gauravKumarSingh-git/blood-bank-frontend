@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, catchError, combineLatest, map, Observable, Subject, tap, throwError} from 'rxjs';
+import { BehaviorSubject, catchError, combineLatest, filter, map, Observable, startWith, Subject, tap, throwError} from 'rxjs';
 import { AppConstants } from 'src/app/constants/app.constants';
 import { environment } from 'src/app/environments/environment';
 import { UserRequest } from '../../shared/user-request.model';
 import * as XLSX from 'xlsx'; 
+import { FormControl, FormGroup, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-request-history',
@@ -19,10 +20,13 @@ export class RequestHistoryComponent {
     AppConstants.USER_API_URL +
     `/getUserAndRequestByStatus`;
 
-  // sortBy= new BehaviorSubject<string>('username');
+  searchByUsername= new BehaviorSubject<string>('');
   // direction= new BehaviorSubject<string>('asc');
   // private sortByObs = this.sortBy.asObservable();
   // private dirObs = this.direction.asObservable();
+  searchForm: FormGroup = new FormGroup({
+    'username': new FormControl(null)
+  });
   
 
   constructor(private http: HttpClient) {}
@@ -43,19 +47,25 @@ export class RequestHistoryComponent {
 
   requests$ = combineLatest([
     this.acceptedRequests$,
-    this.rejectedRequests$
-  ]).pipe(
+    this.rejectedRequests$, 
+    this.searchByUsername
+  ])
+  .pipe(
     map(([accepted, rejected]) => {
       return [...accepted, ...rejected];
     }),
+    map((request) =>{
+      let username = this.searchByUsername.getValue().trim().toLowerCase();
+      console.log(username)
+      if(username){
+        return request.filter((req) => req.username.toLowerCase().includes(username));
+      }else {
+        return request;
+      }
+    }
+     ),
     map((request) => request.sort((a, b) => b.date.localeCompare(a.date)))
   )
-
-  // sortedRequests$ = combineLatest([
-  //   this.requests$,
-  //   this.sortByObs,
-  //   this.dirObs
-  // ])
  
 
   private handleError(err: HttpErrorResponse): Observable<never> {
@@ -78,6 +88,19 @@ export class RequestHistoryComponent {
   }
 
   sortByUsername(){
-    
+    console.log('sort by username')
+  }
+
+  onSearchFormSubmit(form: FormGroup) {
+    this.searchByUsername.next(form.value.username)
+  }
+  
+  search(){
+    this.searchByUsername.next(this.searchForm.value.username)
+
+  }
+  clearSearch(){
+    this.searchByUsername.next('');
+    this.searchForm.reset();
   }
 }
