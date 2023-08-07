@@ -37,3 +37,19 @@ h2{
 .search-box button{
     padding: 0px 2px;
 }
+
+.sortableCol{
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    align-items: center;
+    height: 100%;
+}
+
+.disabled-arrow {
+    color: rgb(188, 185, 185);
+}
+
+.enabled-arrow{
+    color: green;
+}

@@ -25,8 +25,25 @@
     <thead>
       <tr>
         <th scope="col">S.No</th>
-        <th scope="col" (click)="sortByUsername()">
-          Username
+        <th scope="col" (click)="sortByField('username')" >
+          <div class="sortableCol">
+            Username
+            <mat-icon 
+              *ngIf="sortBy.value === 'username' && direction.value === 'asc'" 
+              class="enabled-arrow">
+                arrow_upward
+            </mat-icon>
+            <mat-icon 
+              *ngIf="sortBy.value === 'username' && direction.value === 'desc'" 
+              class="enabled-arrow">
+                arrow_downward
+              </mat-icon>
+            <mat-icon 
+              *ngIf="sortBy.value !== 'username'" 
+              class="disabled-arrow">
+                arrow_upward
+            </mat-icon>
+          </div>
         </th>
         <th scope="col">Email</th>
         <th scope="col">State</th>
@@ -34,7 +51,26 @@
         <th scope="col">Phone Number</th>
         <th scope="col">Blood Group</th>
         <th scope="col">Quantity</th>
-        <th scope="col">Date of Request</th>
+        <th scope="col" (click)="sortByField('date')">
+          <div class="sortableCol">
+            Date
+            <mat-icon 
+              *ngIf="sortBy.value === 'date' && direction.value === 'asc'" 
+              class="enabled-arrow">
+                arrow_upward
+            </mat-icon>
+            <mat-icon 
+              *ngIf="sortBy.value === 'date' && direction.value === 'desc'" 
+              class="enabled-arrow">
+                arrow_downward
+            </mat-icon>
+            <mat-icon 
+              *ngIf="sortBy.value !== 'date'"  
+              class="disabled-arrow">
+                arrow_upward
+            </mat-icon>
+          </div>
+        </th>
         <th scope="col">Status</th>
       </tr>
     </thead>

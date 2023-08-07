@@ -21,14 +21,13 @@ export class RequestHistoryComponent {
     `/getUserAndRequestByStatus`;
 
   searchByUsername= new BehaviorSubject<string>('');
-  // direction= new BehaviorSubject<string>('asc');
-  // private sortByObs = this.sortBy.asObservable();
-  // private dirObs = this.direction.asObservable();
+  direction= new BehaviorSubject<string>('desc');
+  sortBy = new BehaviorSubject<string>('date');
+
   searchForm: FormGroup = new FormGroup({
     'username': new FormControl(null)
   });
   
-
   constructor(private http: HttpClient) {}
 
   acceptedRequests$ = this.http.get<UserRequest[]>(this.getUserAndRequestDetails + "/accepted").pipe(
@@ -48,7 +47,9 @@ export class RequestHistoryComponent {
   requests$ = combineLatest([
     this.acceptedRequests$,
     this.rejectedRequests$, 
-    this.searchByUsername
+    this.searchByUsername,
+    this.sortBy,
+    this.direction
   ])
   .pipe(
     map(([accepted, rejected]) => {
@@ -63,8 +64,23 @@ export class RequestHistoryComponent {
         return request;
       }
     }
-     ),
-    map((request) => request.sort((a, b) => b.date.localeCompare(a.date)))
+    ),
+    map((request) => {
+      let field = this.sortBy.getValue();
+      let dir = this.direction.getValue();
+      // return request.sort((a, b) => b.date.localeCompare(a.date))
+      return request.sort((a, b) => {
+        if(field === 'username' && dir === 'desc'){
+          return b.username.localeCompare(a.username);
+        }else if(field === 'username' && dir === 'asc'){
+          return a.username.localeCompare(b.username);
+        }else if(field === 'date' && dir === 'desc'){
+          return b.date.localeCompare(a.date);
+        }else {
+          return a.date.localeCompare(b.date);
+        }
+      })
+    })
   )
  
 
@@ -87,8 +103,36 @@ export class RequestHistoryComponent {
     XLSX.writeFile(wb, 'RequestHistory.xlsx');
   }
 
-  sortByUsername(){
-    console.log('sort by username')
+  // sortByUsername(){
+  //   console.log('sort by username');
+  //   if(this.sortBy.getValue() === 'username'){
+  //     this.direction.next('asc');
+  //   }else{
+  //     this.sortBy.next('username');
+  //   }
+  // }
+
+  // sortByDate(){
+  //   console.log('sort by date');
+  //   if(this.sortBy.getValue() === 'username'){
+  //     this.direction.next('asc');
+  //   }else{
+  //     this.sortBy.next('username');
+  //   }
+  // }
+
+  sortByField(field: string) {
+    console.log('sort by ' + field);
+    if(this.sortBy.getValue() === field){
+      if(this.direction.getValue() === 'asc'){
+        this.direction.next('desc');
+      }else {
+        this.direction.next('asc');
+      }
+    }else {
+      this.sortBy.next(field);
+      this.direction.next('asc')
+    }
   }
 
   onSearchFormSubmit(form: FormGroup) {
