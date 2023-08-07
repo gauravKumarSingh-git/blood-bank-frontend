@@ -57,7 +57,6 @@ export class RequestHistoryComponent {
     }),
     map((request) =>{
       let username = this.searchByUsername.getValue().trim().toLowerCase();
-      console.log(username)
       if(username){
         return request.filter((req) => req.username.toLowerCase().includes(username));
       }else {
@@ -76,8 +75,12 @@ export class RequestHistoryComponent {
           return a.username.localeCompare(b.username);
         }else if(field === 'date' && dir === 'desc'){
           return b.date.localeCompare(a.date);
-        }else {
+        }else if(field === 'date' && dir === 'asc'){
           return a.date.localeCompare(b.date);
+        }else if(field === 'quantity' && dir === 'desc'){
+          return (+b.quantity) - (+a.quantity);
+        }else {
+          return (+a.quantity) - (+b.quantity);
         }
       })
     })

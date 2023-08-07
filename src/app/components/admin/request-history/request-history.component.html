@@ -50,7 +50,27 @@
         <th scope="col">Address</th>
         <th scope="col">Phone Number</th>
         <th scope="col">Blood Group</th>
-        <th scope="col">Quantity</th>
+        <th scope="col" (click)="sortByField('quantity')">
+          <div class="sortableCol">
+            Quantity
+            <mat-icon 
+              *ngIf="sortBy.value === 'quantity' && direction.value === 'asc'" 
+              class="enabled-arrow">
+                arrow_upward
+            </mat-icon>
+            <mat-icon 
+              *ngIf="sortBy.value === 'quantity' && direction.value === 'desc'" 
+              class="enabled-arrow">
+                arrow_downward
+            </mat-icon>
+            <mat-icon 
+              *ngIf="sortBy.value !== 'quantity'"  
+              class="disabled-arrow">
+                arrow_upward
+            </mat-icon>
+          </div>
+
+        </th>
         <th scope="col" (click)="sortByField('date')">
           <div class="sortableCol">
             Date
