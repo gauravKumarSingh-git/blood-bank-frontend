@@ -1,11 +1,13 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, EMPTY, map, tap } from 'rxjs';
 import { AppConstants } from 'src/app/constants/app.constants';
 import { environment } from 'src/app/environments/environment';
 import { UserRequest } from '../../shared/user-request.model';
 import { AuthService } from 'src/app/auth.service';
 import { SnackbarService } from '../../shared/snackbar.service';
+import { UserService } from '../services/user.service';
+import { ToastService } from '../../shared/toast/toast.service';
+import { ToastsContainer } from '../../shared/toast/toasts-container.component';
 
 @Component({
   selector: 'app-requests',
@@ -13,7 +15,7 @@ import { SnackbarService } from '../../shared/snackbar.service';
   styleUrls: ['./requests.component.css'],
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RequestsComponent {
+export class RequestsComponent{
   getUserRequest =
     environment.rooturl +
     AppConstants.USER_API_URL +
@@ -28,18 +30,25 @@ export class RequestsComponent {
   successMessage=''
   errorMessage=''
 
-  constructor(private http: HttpClient, private authService: AuthService, private snackbarService: SnackbarService) {}
+  constructor(private http: HttpClient, 
+    private userService: UserService,
+    private toastService: ToastService) {
+      this.userService.fetchRequest();
+    }
 
-  requests$ = this.http.get<UserRequest[]>(this.getUserRequest).pipe(
-    tap((data) => {
-      console.log(data);
-    }),
-    map((data) => data.sort((a, b) => b.date.localeCompare(a.date))),
-    catchError((error) => {
-      console.log(error);
-      return EMPTY;
-    })
-  );
+  // requests$ = this.http.get<UserRequest[]>(this.getUserRequest).pipe(
+  //   tap((data) => {
+  //     console.log(data);
+  //   }),
+  //   map((data) => data.sort((a, b) => b.date.localeCompare(a.date))),
+  //   catchError((error) => {
+  //     console.log(error);
+  //     return EMPTY;
+  //   })
+  // );
+
+  requests$ = this.userService.requestObs$;
+  
 
   onAccept(request: UserRequest) {
     this.http
@@ -59,9 +68,9 @@ export class RequestsComponent {
           .subscribe(
             (response) => {
               console.log(response);
-              this.successMessage = 'Request Accepted'
-              location.reload();
-              this.authService.login();
+              this.toastService.show('Request Accepted', { classname: 'bg-success text-light', delay: 3000 });
+              this.userService.fetchRequest();
+              // this.authService.login();
             },
             (error) => console.log(error)
           );
@@ -69,11 +78,10 @@ export class RequestsComponent {
       (error) => {
         console.log(error)
         if(error.status === 400){
-          this.snackbarService.showSnackbarMessage("Not enough quantity present");
-          // this.errorMessage = 'Not Enough quantity present';
+          this.toastService.show('Not enough quantity present', { classname: 'bg-danger text-light', delay: 3000 });
         }
         else {
-          this.errorMessage = error.message;
+          this.toastService.show(error.message, { classname: 'bg-danger text-light', delay: 3000 });
         }
       }
       );
@@ -87,9 +95,9 @@ export class RequestsComponent {
       .subscribe(
         (response) => {
           console.log(response);
-          this.successMessage='Request Rejected';
-          location.reload();
-          this.authService.login();
+          this.toastService.show('Request Rejected', { classname: 'bg-danger text-light', delay: 3000 });
+          this.userService.fetchRequest();
+          // this.authService.login();
         },
         (error) => console.log(error)
       );

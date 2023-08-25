@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AppConstants } from 'src/app/constants/app.constants';
 import { environment } from 'src/app/environments/environment';
+import { ToastService } from '../../shared/toast/toast.service';
 
 @Component({
   selector: 'app-blood-stock',
@@ -15,7 +16,7 @@ export class BloodStockComponent implements OnInit {
   updateBloodGroupAPI = environment.rooturl + AppConstants.BLOOD_GROUP_API_URL + '/updateQuantity';
   bloodStockForm: FormGroup;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private toastService: ToastService) {}
   
   ngOnInit(): void {
     this.bloodStockForm = new FormGroup({
@@ -35,11 +36,15 @@ export class BloodStockComponent implements OnInit {
     ).subscribe(
       response => {
         console.log(response);
-        this.successMessage = response;
+        // this.successMessage = response;
+        this.toastService.show(response, { classname: 'bg-success text-light', delay: 3000 });
+        this.bloodStockForm.reset();
       },
       error => {
         console.log(error)
-        this.errorMessage = error;
+        // this.errorMessage = error;
+        this.toastService.show(error, { classname: 'bg-danger text-light', delay: 3000 });
+        this.bloodStockForm.reset();
       }
     )
   }

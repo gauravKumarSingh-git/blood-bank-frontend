@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { map } from 'rxjs';
 import { AppConstants } from 'src/app/constants/app.constants';
 import { environment } from 'src/app/environments/environment';
+import { ToastService } from '../../shared/toast/toast.service';
 import { DonorService } from '../donor.service';
 
 @Component({
@@ -19,7 +20,7 @@ export class DonateBloodComponent {
   addRequestAPI =
     environment.rooturl + AppConstants.USER_API_URL + '/addRequest';
 
-  constructor(private http: HttpClient, private donorService: DonorService) {}
+  constructor(private http: HttpClient, private donorService: DonorService, private toastService: ToastService) {}
 
   ngOnInit(): void {
     this.donateBloodForm = new FormGroup({
@@ -45,12 +46,13 @@ export class DonateBloodComponent {
           )
           .subscribe(
             (data) => {
-              this.successMessage = data;
-              // console.log(data);
+              // this.successMessage = data;
+              this.toastService.show('Donation Request Successfully Submitted', { classname: 'bg-success text-light', delay: 3000 });
+              this.donateBloodForm.reset();
             },
             (error) => {
-              this.errorMessage = error;
-              console.log(error.message);
+              // this.errorMessage = error;
+              this.toastService.show(error, { classname: 'bg-danger text-light', delay: 3000 });
             }
           );
       },

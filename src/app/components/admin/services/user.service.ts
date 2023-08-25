@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, EMPTY, map, tap } from 'rxjs';
+import { catchError, EMPTY, map, Subject, tap } from 'rxjs';
 import { AppConstants } from 'src/app/constants/app.constants';
 import { environment } from 'src/app/environments/environment';
+import { UserRequest } from '../../shared/user-request.model';
 import { User } from '../../shared/user.model';
 
 @Injectable({
@@ -13,6 +14,16 @@ export class UserService {
     environment.rooturl +
     AppConstants.USER_API_URL +
     `/getUsersByRole/`;
+
+  getHospitalRequest =
+  environment.rooturl +
+  AppConstants.USER_API_URL +
+  `/getUserAndRequestDetails/ROLE_HOSPITAL/pending`;
+
+  getDonorRequest =
+  environment.rooturl +
+  AppConstants.USER_API_URL +
+  `/getUserAndRequestDetails/ROLE_DONOR/pending`;
   
   totalPages: number;
   elementsOnPage: number;
@@ -38,5 +49,37 @@ export class UserService {
         return EMPTY;
       })
     );
+  }
+
+  request = new Subject<UserRequest[]>();
+  requestObs$ = this.request.asObservable();
+
+  fetchRequest() {
+    this.http.get<UserRequest[]>(this.getHospitalRequest).pipe(
+      map((data) => data.sort((a, b) => b.date.localeCompare(a.date))),
+      catchError((error) => {
+        console.log(error);
+        return EMPTY;
+      }),
+    )
+    .subscribe((data) => {
+      this.request.next(data);
+    });
+
+  }
+
+  donation = new Subject<UserRequest[]>();
+  donationObs$ = this.donation.asObservable();
+
+  fetchDonations(){
+    this.http.get<UserRequest[]>(this.getDonorRequest).pipe(
+      map((data) => data.sort((a, b) => b.date.localeCompare(a.date))),
+      catchError((error) => {
+        console.log(error);
+        return EMPTY;
+      })
+    ).subscribe((data) => {
+      this.donation.next(data);
+    });
   }
 }

@@ -4,7 +4,9 @@ import { catchError, EMPTY, map, tap } from 'rxjs';
 import { AuthService } from 'src/app/auth.service';
 import { AppConstants } from 'src/app/constants/app.constants';
 import { environment } from 'src/app/environments/environment';
+import { ToastService } from '../../shared/toast/toast.service';
 import { UserRequest } from '../../shared/user-request.model';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-donations',
@@ -27,18 +29,25 @@ export class DonationsComponent {
   successMessage = '';
   errorMessage = '';
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(
+    private http: HttpClient, 
+    private authService: AuthService,
+    private userService: UserService,
+    private toastService: ToastService) {
+      this.userService.fetchDonations();
+    }
 
-  donations$ = this.http.get<UserRequest[]>(this.getUserRequest).pipe(
-    tap((data) => {
-      console.log(data);
-    }),
-    map((data) => data.sort((a, b) => b.date.localeCompare(a.date))),
-    catchError((error) => {
-      console.log(error);
-      return EMPTY;
-    })
-  );
+  // donations$ = this.http.get<UserRequest[]>(this.getUserRequest).pipe(
+  //   tap((data) => {
+  //     console.log(data);
+  //   }),
+  //   map((data) => data.sort((a, b) => b.date.localeCompare(a.date))),
+  //   catchError((error) => {
+  //     console.log(error);
+  //     return EMPTY;
+  //   })
+  // );
+  donations$ = this.userService.donationObs$;
 
   onAccept(request: UserRequest) {
     this.http
@@ -59,16 +68,18 @@ export class DonationsComponent {
             .subscribe(
               (response) => {
                 console.log(response);
-                this.successMessage = 'Request Accepted';
-                location.reload();
-                this.authService.login();
+                this.toastService.show('Request Accepted', { classname: 'bg-success text-light', delay: 3000 });
+                this.userService.fetchDonations();
+                // this.successMessage = 'Request Accepted';
+                // location.reload();
+                // this.authService.login();
               },
               (error) => console.log(error)
             );
         },
         (error) => {
           console.log(error);
-          this.errorMessage = error.message;
+          this.toastService.show(error.message, { classname: 'bg-danger text-light', delay: 3000 });
         }
       );
   }
@@ -81,9 +92,11 @@ export class DonationsComponent {
       .subscribe(
         (response) => {
           console.log(response);
-          this.successMessage = 'Request Rejected';
-          location.reload();
-          this.authService.login();
+          this.toastService.show('Request Rejected', { classname: 'bg-danger text-light', delay: 3000 });
+          this.userService.fetchDonations();
+          // this.successMessage = 'Request Rejected';
+          // location.reload();
+          // this.authService.login();
         },
         (error) => console.log(error)
       );

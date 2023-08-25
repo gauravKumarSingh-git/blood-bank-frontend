@@ -12,6 +12,7 @@ import { RequestsComponent } from './requests/requests.component';
 import { BloodStockComponent } from './blood-stock/blood-stock.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { ToastsContainer } from '../shared/toast/toasts-container.component';
 
 
 
@@ -32,7 +33,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatListModule,
     ReactiveFormsModule,
     MatIconModule,
-    FormsModule
+    FormsModule,
+    ToastsContainer
   ]
 })
 export class AdminModule { }

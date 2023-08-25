@@ -1,11 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, catchError, combineLatest, filter, map, Observable, startWith, Subject, tap, throwError} from 'rxjs';
+import { BehaviorSubject, catchError, combineLatest, map, Observable, tap, throwError} from 'rxjs';
 import { AppConstants } from 'src/app/constants/app.constants';
 import { environment } from 'src/app/environments/environment';
 import { UserRequest } from '../../shared/user-request.model';
 import * as XLSX from 'xlsx'; 
-import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-request-history',
@@ -67,7 +67,6 @@ export class RequestHistoryComponent {
     map((request) => {
       let field = this.sortBy.getValue();
       let dir = this.direction.getValue();
-      // return request.sort((a, b) => b.date.localeCompare(a.date))
       return request.sort((a, b) => {
         if(field === 'username' && dir === 'desc'){
           return b.username.localeCompare(a.username);
@@ -105,24 +104,6 @@ export class RequestHistoryComponent {
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
     XLSX.writeFile(wb, 'RequestHistory.xlsx');
   }
-
-  // sortByUsername(){
-  //   console.log('sort by username');
-  //   if(this.sortBy.getValue() === 'username'){
-  //     this.direction.next('asc');
-  //   }else{
-  //     this.sortBy.next('username');
-  //   }
-  // }
-
-  // sortByDate(){
-  //   console.log('sort by date');
-  //   if(this.sortBy.getValue() === 'username'){
-  //     this.direction.next('asc');
-  //   }else{
-  //     this.sortBy.next('username');
-  //   }
-  // }
 
   sortByField(field: string) {
     console.log('sort by ' + field);

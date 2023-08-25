@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalDismissReasons, NgbDatepickerModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
+import { ToastsContainer } from '../shared/toast/toasts-container.component';
 
 
 
@@ -28,7 +29,8 @@ import { MatIconModule } from '@angular/material/icon';
     ReactiveFormsModule,
     NgbDatepickerModule,
     MatSnackBarModule,
-    MatIconModule
+    MatIconModule,
+    ToastsContainer
   ]
 })
 export class DonorModule { }

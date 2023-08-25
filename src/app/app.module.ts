@@ -33,6 +33,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { PasswordResetComponent } from './components/password-reset/password-reset.component';
+import { ToastComponent } from './components/shared/toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { PasswordResetComponent } from './components/password-reset/password-res
     LoginHeaderComponent,
     SidenavComponent,
     PasswordResetComponent,
+    ToastComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,7 +69,7 @@ import { PasswordResetComponent } from './components/password-reset/password-res
     MatListModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSnackBarModule
+    MatSnackBarModule,
   ],
   providers: [
     {
