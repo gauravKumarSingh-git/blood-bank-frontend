@@ -53,6 +53,7 @@ export class DonateBloodComponent {
             (error) => {
               // this.errorMessage = error;
               this.toastService.show(error, { classname: 'bg-danger text-light', delay: 3000 });
+              this.donateBloodForm.reset();
             }
           );
       },

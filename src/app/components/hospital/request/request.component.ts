@@ -5,6 +5,7 @@ import { map } from 'rxjs';
 import { AppConstants } from 'src/app/constants/app.constants';
 import { environment } from 'src/app/environments/environment';
 import { DonorService } from '../../donor/donor.service';
+import { ToastService } from '../../shared/toast/toast.service';
 
 @Component({
   selector: 'app-request',
@@ -19,7 +20,7 @@ export class RequestComponent {
   addRequestAPI =
     environment.rooturl + AppConstants.USER_API_URL + '/addRequest';
 
-  constructor(private http: HttpClient, private donorService: DonorService) {}
+  constructor(private http: HttpClient, private donorService: DonorService, private toastService: ToastService) {}
 
   ngOnInit(): void {
     this.requestBloodForm = new FormGroup({
@@ -45,12 +46,15 @@ export class RequestComponent {
           )
           .subscribe(
             (data) => {
-              this.successMessage = 'Request successfully submitted';
-              // console.log(data);
+              // this.successMessage = 'Request successfully submitted';
+              this.toastService.show('Request Successfully Submitted', { classname: 'bg-success text-light', delay: 3000 });
+              this.requestBloodForm.reset();
             },
             (error) => {
-              this.errorMessage = error;
-              console.log(error.message);
+              // this.errorMessage = error;
+              // console.log(error.message);
+              this.toastService.show(error.message, { classname: 'bg-danger text-light', delay: 3000 });
+              this.requestBloodForm.reset();
             }
           );
       },

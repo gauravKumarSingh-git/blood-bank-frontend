@@ -9,6 +9,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
+import { ToastsContainer } from '../shared/toast/toasts-container.component';
 
 
 
@@ -24,7 +25,8 @@ import { MatIconModule } from '@angular/material/icon';
     HospitalRoutingModule,
     ReactiveFormsModule,
     MatSnackBarModule,
-    MatIconModule
+    MatIconModule,
+    ToastsContainer
   ]
 })
 export class HospitalModule { }
