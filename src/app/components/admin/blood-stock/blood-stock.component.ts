@@ -35,13 +35,13 @@ export class BloodStockComponent implements OnInit {
       }
     ).subscribe(
       response => {
-        console.log(response);
+        // console.log(response);
         // this.successMessage = response;
         this.toastService.show(response, { classname: 'bg-success text-light', delay: 3000 });
         this.bloodStockForm.reset();
       },
       error => {
-        console.log(error)
+        // console.log(error)g
         // this.errorMessage = error;
         this.toastService.show(error, { classname: 'bg-danger text-light', delay: 3000 });
         this.bloodStockForm.reset();

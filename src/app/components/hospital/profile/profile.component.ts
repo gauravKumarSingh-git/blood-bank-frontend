@@ -67,11 +67,6 @@ export class ProfileComponent implements OnInit{
       async (response) => {
         console.log(response);
         this._snackBar.open(response, 'close', { duration: 3000 })
-        // let promise = new Promise((resolve, reject) => {
-        //   setTimeout(() => resolve("done!"), 1000)
-        // });
-      
-        // let result = await promise;
         location.reload();
       },
       (error) => {

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { filter, map } from 'rxjs';
-import { AuthService } from 'src/app/auth.service';
+import { map } from 'rxjs';
 import { Request } from '../shared/request.model';
 import { DonorService } from './donor.service';
 

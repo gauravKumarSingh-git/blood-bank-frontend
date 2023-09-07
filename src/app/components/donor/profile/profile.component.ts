@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, OnInit, resolveForwardRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { NgbModal, NgbToast } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { AppConstants } from 'src/app/constants/app.constants';
 import { environment } from 'src/app/environments/environment';
@@ -29,7 +28,6 @@ export class ProfileComponent implements OnInit{
   constructor(private donorService: DonorService, 
     private modalService: NgbModal, 
     private http: HttpClient, 
-    private _snackBar: MatSnackBar,
     private snackbarService: SnackbarService) {}
   
   ngOnInit(): void {

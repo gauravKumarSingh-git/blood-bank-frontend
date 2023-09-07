@@ -37,3 +37,6 @@ h2{
   display: flex;
   justify-content: center;
 }
+::ng-deep .mat-horizontal-stepper-header{
+  pointer-events: none !important;
+}

@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, EMPTY, map, shareReplay, tap } from 'rxjs';
-import { AuthService } from 'src/app/auth.service';
+import { catchError, EMPTY, tap } from 'rxjs';
 import { AppConstants } from 'src/app/constants/app.constants';
 import { environment } from 'src/app/environments/environment';
 import { LoginService } from '../login/login.service';

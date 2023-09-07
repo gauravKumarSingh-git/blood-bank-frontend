@@ -34,7 +34,6 @@ export class RequestComponent {
   }
 
   onSubmit() {
-    // console.log(this.donateBloodForm);
     this.donorService.donorDetails$.pipe(map((data) => data.userId)).subscribe(
       (data) => {
         this.userId = data;
@@ -46,13 +45,10 @@ export class RequestComponent {
           )
           .subscribe(
             (data) => {
-              // this.successMessage = 'Request successfully submitted';
               this.toastService.show('Request Successfully Submitted', { classname: 'bg-success text-light', delay: 3000 });
               this.requestBloodForm.reset();
             },
             (error) => {
-              // this.errorMessage = error;
-              // console.log(error.message);
               this.toastService.show(error.message, { classname: 'bg-danger text-light', delay: 3000 });
               this.requestBloodForm.reset();
             }

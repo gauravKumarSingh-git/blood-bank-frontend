@@ -1,12 +1,10 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { catchError, map, Observable, tap, throwError } from 'rxjs';
 import { AppConstants } from 'src/app/constants/app.constants';
 import { environment } from 'src/app/environments/environment';
-import { DonorService } from '../../donor/donor.service';
+import { ToastService } from '../../shared/toast/toast.service';
 import { User } from '../../shared/user.model';
 import { UserService } from '../services/user.service';
 
@@ -19,22 +17,16 @@ export class HospitalDetailsComponent implements OnInit{
   page: number = 1;
   totalPages: number;
   sortBy: string = 'username';
-  // hospital: User;
   updateForm: FormGroup;
   closeResult = '';
   role='ROLE_HOSPITAL';
   hospitals: User[];
 
-  // getHospitalsByRoleAndPageNo =
-  //   environment.rooturl +
-  //   AppConstants.USER_API_URL +
-  //   `/getUsersByRole/${this.role}/${this.page}/${this.sortBy}`;
-
   constructor(
     private http: HttpClient,
-    private _snackBar: MatSnackBar,
     private modalService: NgbModal,
-    private userService: UserService
+    private userService: UserService,
+    private toastService: ToastService
   ) {}
 
 
@@ -53,33 +45,6 @@ export class HospitalDetailsComponent implements OnInit{
         (error) => console.log(error)
       )
   }
-
-  // hospitals$ = this.http
-  //   .get<{ [key: string]: Object }>(this.getHospitalsByRoleAndPageNo)
-  //   .pipe(
-  //     tap((data) => {
-  //       console.log(data);
-  //       this.totalPages = data['totalPages'] as number;
-  //     }),
-  //     map((data) => {
-  //       return data['content'] as User[];
-  //     }),
-  //     catchError(this.handleError)
-  //   );
-
-  
-
-  // private handleError(err: HttpErrorResponse): Observable<never> {
-  //   let errorMessage: string;
-  //   if (err.error instanceof ErrorEvent) {
-  //     errorMessage = `An error occurred: ${err.error.message}`;
-  //   } else {
-  //     errorMessage = `Backend returned code ${err.status}: ${err.message}`;
-  //   }
-  //   console.error(err);
-  //   return throwError(() => errorMessage);
-  // }
-
 
 
   open(content: any, hospital: User) {
@@ -118,8 +83,10 @@ export class HospitalDetailsComponent implements OnInit{
       .subscribe(
         async (response) => {
           console.log(response);
-          this._snackBar.open(response, 'close', { duration: 3000 });
-          location.reload();
+          this.toastService.show(response, { classname: 'bg-success text-light', delay: 2000 });
+          let promise = new Promise((resolve, reject) => {
+            setTimeout(() => resolve(location.reload()), 1000);
+          });
         },
         (error) => {
           console.log(error);
@@ -131,7 +98,6 @@ export class HospitalDetailsComponent implements OnInit{
     if(this.page > 1){
       this.page -= 1;
       this.getUsersData();
-      // this.donors$ = this.userService.getUsersByRoleAndPageNo(this.role, this.page, this.sortBy);
     }
   }
 
@@ -139,7 +105,6 @@ export class HospitalDetailsComponent implements OnInit{
     if(this.page < this.totalPages){
       this.page += 1;
       this.getUsersData();
-      // this.donors$ = this.userService.getUsersByRoleAndPageNo(this.role, this.page, this.sortBy);
     }
   }
 
@@ -148,18 +113,14 @@ export class HospitalDetailsComponent implements OnInit{
       let requiredPage = pageForm.value['page'];
       if(requiredPage < 1){
         this.page = 1;
-        // this.getUsersData();
       }
       else if(requiredPage > this.totalPages){
         this.page = this.totalPages;
-        // this.getUsersData();
       }
       else {
         this.page = requiredPage;
-        // this.getUsersData();
       }
       this.getUsersData();
-      // this.donors$ = this.userService.getUsersByRoleAndPageNo(this.role, this.page, this.sortBy);
     }
     pageForm.reset();
   }

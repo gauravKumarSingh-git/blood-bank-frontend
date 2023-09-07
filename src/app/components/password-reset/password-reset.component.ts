@@ -1,11 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormControl, NgForm } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppConstants } from 'src/app/constants/app.constants';
 import { environment } from 'src/app/environments/environment';
-import { SnackbarService } from '../shared/snackbar.service';
-import { User } from '../shared/user.model';
+import { ToastService } from '../shared/toast/toast.service';
 
 @Component({
   selector: 'app-password-reset',
@@ -23,11 +22,11 @@ export class PasswordResetComponent {
 
   constructor(
     private http: HttpClient,
-    private snackbarService: SnackbarService
+    private toastService: ToastService,
+    private route: Router
   ) {}
 
   onUsernameSubmit(form: NgForm) {
-    // console.log(form.value)
     this.sending = true;
     this.http
       .post(
@@ -50,7 +49,7 @@ export class PasswordResetComponent {
           this.isOtpSent = false;
           this.sending = false;
           console.log(error);
-          this.snackbarService.showSnackbarMessage(JSON.parse(error.error).errorMessage);
+          this.toastService.show(JSON.parse(error.error).errorMessage, { classname: 'bg-danger text-light', delay: 3000 });
         }
       );
   }
@@ -69,12 +68,10 @@ export class PasswordResetComponent {
         (response) => {
           console.log(response);
           if (response) {
-            this.snackbarService.showSnackbarMessage(
-              'Successfully Verified OTP'
-            );
+            this.toastService.show('Successfully Verified OTP', { classname: 'bg-success text-light', delay: 3000 });
             this.otpVerified = true;
           } else {
-            this.snackbarService.showSnackbarMessage('Invalid OTP');
+            this.toastService.show('Invalid OTP', { classname: 'bg-danger text-light', delay: 3000 });
           }
         },
         (error) => console.log(error)
@@ -98,11 +95,15 @@ export class PasswordResetComponent {
       { responseType: 'text' }
     ).subscribe(
       (response) => {
-        console.log(response);
         this.passwordUpdated=true;
+        this.toastService.show('Password Successfully Updated', { classname: 'bg-success text-light', delay: 2000 });
+        setTimeout(() => {
+          this.route.navigate(['/login'])
+        }, 2010);
       },
       (error) => {
         console.log(error);
+        this.toastService.show(error.errorMessage, { classname: 'bg-danger text-light', delay: 3000 });
       }
     )
   }

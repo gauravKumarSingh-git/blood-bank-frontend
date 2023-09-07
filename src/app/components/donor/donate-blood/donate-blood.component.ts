@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { map } from 'rxjs';
 import { AppConstants } from 'src/app/constants/app.constants';
@@ -46,12 +46,10 @@ export class DonateBloodComponent {
           )
           .subscribe(
             (data) => {
-              // this.successMessage = data;
               this.toastService.show('Donation Request Successfully Submitted', { classname: 'bg-success text-light', delay: 3000 });
               this.donateBloodForm.reset();
             },
             (error) => {
-              // this.errorMessage = error;
               this.toastService.show(error, { classname: 'bg-danger text-light', delay: 3000 });
               this.donateBloodForm.reset();
             }

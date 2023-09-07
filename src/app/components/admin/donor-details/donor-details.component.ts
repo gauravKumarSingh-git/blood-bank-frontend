@@ -1,5 +1,5 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/app/environments/environment';
 import { AppConstants } from 'src/app/constants/app.constants';
 import { User } from '../../shared/user.model';
@@ -7,7 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SnackbarService } from '../../shared/snackbar.service';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
-import { catchError, Observable, tap, throwError } from 'rxjs';
+import { ToastService } from '../../shared/toast/toast.service';
 
 @Component({
   selector: 'app-donor-details',
@@ -32,8 +32,8 @@ export class DonorDetailsComponent implements OnInit{
   constructor(
     private modalService: NgbModal,
     private http: HttpClient,
-    private snackbarService: SnackbarService,
-    private userService: UserService
+    private userService: UserService,
+    private toastService: ToastService
   ) {}
 
 
@@ -53,32 +53,6 @@ export class DonorDetailsComponent implements OnInit{
         (error) => console.log(error)
       )
   }
-
-  
-  // donors$ = this.userService.getUsersByRoleAndPageNo(this.role, this.page, this.sortBy);
-  // donors$ = this.http
-    // .get<User[]>(this.getDonorsByRoleAndPageNo)
-    // .pipe(
-      // tap((data) => {
-      //   console.log(data);
-      //   this.totalPages = data['totalPages'] as number;
-      // }),
-      // map((data) => {
-      //   return data['content'] as User[];
-      // }),
-    //   catchError(this.handleError)
-    // );
-
-  // private handleError(err: HttpErrorResponse): Observable<never> {
-  //   let errorMessage: string;
-  //   if (err.error instanceof ErrorEvent) {
-  //     errorMessage = `An error occurred: ${err.error.message}`;
-  //   } else {
-  //     errorMessage = `Backend returned code ${err.status}: ${err.message}`;
-  //   }
-  //   console.error(err);
-  //   return throwError(() => errorMessage);
-  // }
 
   open(content: any, donor: User) {
     this.updateForm = new FormGroup({
@@ -118,9 +92,9 @@ export class DonorDetailsComponent implements OnInit{
       .subscribe(
         async (response) => {
           console.log(response);
-          this.snackbarService.showSnackbarMessage(response);
+          this.toastService.show(response, { classname: 'bg-success text-light', delay: 2000 });
           let promise = new Promise((resolve, reject) => {
-            setTimeout(() => resolve(location.reload()), 2000);
+            setTimeout(() => resolve(location.reload()), 1000);
           });
 
           let result = await promise;
@@ -135,7 +109,6 @@ export class DonorDetailsComponent implements OnInit{
     if(this.page > 1){
       this.page -= 1;
       this.getUsersData();
-      // this.donors$ = this.userService.getUsersByRoleAndPageNo(this.role, this.page, this.sortBy);
     }
   }
 
@@ -143,7 +116,6 @@ export class DonorDetailsComponent implements OnInit{
     if(this.page < this.totalPages){
       this.page += 1;
       this.getUsersData();
-      // this.donors$ = this.userService.getUsersByRoleAndPageNo(this.role, this.page, this.sortBy);
     }
   }
 
@@ -160,7 +132,6 @@ export class DonorDetailsComponent implements OnInit{
         this.page = requiredPage;
       }
       this.getUsersData();
-      // this.donors$ = this.userService.getUsersByRoleAndPageNo(this.role, this.page, this.sortBy);
     }
     pageForm.reset();
   }

@@ -22,7 +22,6 @@ export class AdminComponent {
 
   bloodGroups$ = this.httpClient.get<BloodGroup[]>(this.getBloodGroups)
   .pipe(
-    tap((data) => console.log(data)),
     map((data) => 
       data.sort((a, b) => {
         return a.bloodGroupName.localeCompare(b.bloodGroupName);

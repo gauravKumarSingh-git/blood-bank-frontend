@@ -3,17 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { AppConstants } from 'src/app/constants/app.constants';
 import { environment } from 'src/app/environments/environment';
 import { UserRequest } from '../../shared/user-request.model';
-import { AuthService } from 'src/app/auth.service';
-import { SnackbarService } from '../../shared/snackbar.service';
 import { UserService } from '../services/user.service';
 import { ToastService } from '../../shared/toast/toast.service';
-import { ToastsContainer } from '../../shared/toast/toasts-container.component';
 
 @Component({
   selector: 'app-requests',
   templateUrl: './requests.component.html',
   styleUrls: ['./requests.component.css'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RequestsComponent{
   getUserRequest =
@@ -35,17 +31,6 @@ export class RequestsComponent{
     private toastService: ToastService) {
       this.userService.fetchRequest();
     }
-
-  // requests$ = this.http.get<UserRequest[]>(this.getUserRequest).pipe(
-  //   tap((data) => {
-  //     console.log(data);
-  //   }),
-  //   map((data) => data.sort((a, b) => b.date.localeCompare(a.date))),
-  //   catchError((error) => {
-  //     console.log(error);
-  //     return EMPTY;
-  //   })
-  // );
 
   requests$ = this.userService.requestObs$;
   
@@ -70,7 +55,6 @@ export class RequestsComponent{
               console.log(response);
               this.toastService.show('Request Accepted', { classname: 'bg-success text-light', delay: 3000 });
               this.userService.fetchRequest();
-              // this.authService.login();
             },
             (error) => console.log(error)
           );
@@ -97,7 +81,6 @@ export class RequestsComponent{
           console.log(response);
           this.toastService.show('Request Rejected', { classname: 'bg-danger text-light', delay: 3000 });
           this.userService.fetchRequest();
-          // this.authService.login();
         },
         (error) => console.log(error)
       );

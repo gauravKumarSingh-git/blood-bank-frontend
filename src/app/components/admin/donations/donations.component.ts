@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { catchError, EMPTY, map, tap } from 'rxjs';
 import { AuthService } from 'src/app/auth.service';
 import { AppConstants } from 'src/app/constants/app.constants';
 import { environment } from 'src/app/environments/environment';
@@ -31,22 +30,11 @@ export class DonationsComponent {
 
   constructor(
     private http: HttpClient, 
-    private authService: AuthService,
     private userService: UserService,
     private toastService: ToastService) {
       this.userService.fetchDonations();
     }
 
-  // donations$ = this.http.get<UserRequest[]>(this.getUserRequest).pipe(
-  //   tap((data) => {
-  //     console.log(data);
-  //   }),
-  //   map((data) => data.sort((a, b) => b.date.localeCompare(a.date))),
-  //   catchError((error) => {
-  //     console.log(error);
-  //     return EMPTY;
-  //   })
-  // );
   donations$ = this.userService.donationObs$;
 
   onAccept(request: UserRequest) {
@@ -70,9 +58,6 @@ export class DonationsComponent {
                 console.log(response);
                 this.toastService.show('Request Accepted', { classname: 'bg-success text-light', delay: 3000 });
                 this.userService.fetchDonations();
-                // this.successMessage = 'Request Accepted';
-                // location.reload();
-                // this.authService.login();
               },
               (error) => console.log(error)
             );
@@ -94,9 +79,6 @@ export class DonationsComponent {
           console.log(response);
           this.toastService.show('Request Rejected', { classname: 'bg-danger text-light', delay: 3000 });
           this.userService.fetchDonations();
-          // this.successMessage = 'Request Rejected';
-          // location.reload();
-          // this.authService.login();
         },
         (error) => console.log(error)
       );
