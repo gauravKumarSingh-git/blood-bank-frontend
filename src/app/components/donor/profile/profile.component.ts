@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { AppConstants } from 'src/app/constants/app.constants';
 import { environment } from 'src/app/environments/environment';
 import { SnackbarService } from '../../shared/snackbar.service';
+import { ToastService } from '../../shared/toast/toast.service';
 import { User } from '../../shared/user.model';
 import { DonorService } from '../donor.service';
 
@@ -28,7 +29,8 @@ export class ProfileComponent implements OnInit{
   constructor(private donorService: DonorService, 
     private modalService: NgbModal, 
     private http: HttpClient, 
-    private snackbarService: SnackbarService) {}
+    private snackbarService: SnackbarService,
+    private toastService: ToastService) {}
   
   ngOnInit(): void {
 
@@ -37,17 +39,17 @@ export class ProfileComponent implements OnInit{
         this.donor = data
         this.updateForm = new FormGroup({
           'userId': new FormControl(this.donor.userId, [Validators.required]),
-          'username': new FormControl(this.donor.username, [Validators.required]),
+          'username': new FormControl(this.donor.username, [Validators.required, Validators.minLength(5), Validators.maxLength(15)]),
           'password': new FormControl(this.donor.password, [Validators.required]),
-          'email': new FormControl(this.donor.email, [Validators.required]),
+          'email': new FormControl(this.donor.email, [Validators.required, Validators.email]),
           'gender': new FormControl(this.donor.gender, [Validators.required]),
           'state': new FormControl(this.donor.state, [Validators.required]),
           'city': new FormControl(this.donor.city, [Validators.required]),
           'address': new FormControl(this.donor.address, [Validators.required]),
           'dateOfBirth': new FormControl(this.donor.dateOfBirth, [Validators.required]),
-          'phoneNumber': new FormControl(this.donor.phoneNumber, [Validators.required]),
+          'phoneNumber': new FormControl(this.donor.phoneNumber, [Validators.required, Validators.min(1000000000), Validators.max(9999999999)]),
           'role': new FormControl(this.donor.role, [Validators.required]),
-          'requests': new FormControl(this.donor.requests, [Validators.required])
+          'requests': new FormControl(this.donor.requests)
         })
       }
     )
@@ -72,6 +74,7 @@ export class ProfileComponent implements OnInit{
       async (response) => {
         console.log(response);
         this.snackbarService.showSnackbarMessage(response);
+        // this.toastService.show('successfully updated', { classname: 'bg-success text-light', delay: 2000 });
         let promise = new Promise((resolve, reject) => {
           setTimeout(() => resolve( location.reload()), 2000)
         });

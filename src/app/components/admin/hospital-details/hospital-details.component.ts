@@ -51,17 +51,17 @@ export class HospitalDetailsComponent implements OnInit{
     console.log(hospital)
     this.updateForm = new FormGroup({
       userId: new FormControl(hospital.userId, [Validators.required]),
-      username: new FormControl(hospital.username, [Validators.required]),
-      password: new FormControl(hospital.password, [Validators.required]),
-      email: new FormControl(hospital.email, [Validators.required]),
-      gender: new FormControl(hospital.gender, [Validators.required]),
+      username: new FormControl(hospital.username, [Validators.required, Validators.minLength(5), Validators.maxLength(15)]),
+      password: new FormControl(hospital.password, [Validators.required, Validators.minLength(8), Validators.maxLength(60)]),
+      email: new FormControl(hospital.email, [Validators.required, Validators.email]),
+      gender: new FormControl(hospital.gender),
       state: new FormControl(hospital.state, [Validators.required]),
       city: new FormControl(hospital.city, [Validators.required]),
       address: new FormControl(hospital.address, [Validators.required]),
-      dateOfBirth: new FormControl(hospital.dateOfBirth, [Validators.required]),
-      phoneNumber: new FormControl(hospital.phoneNumber, [Validators.required]),
+      dateOfBirth: new FormControl(hospital.dateOfBirth),
+      phoneNumber: new FormControl(hospital.phoneNumber, [Validators.required, Validators.min(1000000000),Validators.max(9999999999)]),
       role: new FormControl(hospital.role, [Validators.required]),
-      requests: new FormControl(hospital.requests, [Validators.required]),
+      requests: new FormControl(hospital.requests),
     });
 
 

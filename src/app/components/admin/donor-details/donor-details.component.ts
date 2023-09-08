@@ -8,6 +8,7 @@ import { SnackbarService } from '../../shared/snackbar.service';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { ToastService } from '../../shared/toast/toast.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-donor-details',
@@ -23,6 +24,7 @@ export class DonorDetailsComponent implements OnInit{
   updateForm: FormGroup;
   role='ROLE_DONOR'
   donors: User[];
+  maxDate = moment(new Date()).subtract(8, 'years').format('YYYY-MM-DD')
 
   getDonorsByRoleAndPageNo =
     environment.rooturl +
@@ -57,9 +59,9 @@ export class DonorDetailsComponent implements OnInit{
   open(content: any, donor: User) {
     this.updateForm = new FormGroup({
       userId: new FormControl(donor.userId, [Validators.required]),
-      username: new FormControl(donor.username, [Validators.required]),
-      password: new FormControl(donor.password, [Validators.required]),
-      email: new FormControl(donor.email, [Validators.required]),
+      username: new FormControl(donor.username, [Validators.required, Validators.minLength(5), Validators.maxLength(15)]),
+      password: new FormControl(donor.password, [Validators.required, Validators.minLength(8), Validators.maxLength(60)]),
+      email: new FormControl(donor.email, [Validators.required, Validators.email]),
       gender: new FormControl(donor.gender, [Validators.required]),
       state: new FormControl(donor.state, [Validators.required]),
       city: new FormControl(donor.city, [Validators.required]),
@@ -69,9 +71,11 @@ export class DonorDetailsComponent implements OnInit{
       ]),
       phoneNumber: new FormControl(donor.phoneNumber, [
         Validators.required,
+        Validators.min(1000000000),
+        Validators.max(9999999999),
       ]),
       role: new FormControl(donor.role, [Validators.required]),
-      requests: new FormControl(donor.requests, [Validators.required]),
+      requests: new FormControl(donor.requests),
     });
 
     this.modalService

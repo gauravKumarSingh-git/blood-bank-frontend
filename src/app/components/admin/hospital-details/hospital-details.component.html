@@ -75,6 +75,12 @@
           type="email" 
           class="form-control" 
           formControlName="email" />
+          <div class="text-danger" *ngIf="updateForm.get('email')?.touched && updateForm.get('email')?.hasError('required')">
+            Please provide email
+          </div>
+          <div class="text-danger" *ngIf="updateForm.get('email')?.touched && updateForm.get('email')?.hasError('email')">
+            Please enter valid email
+          </div>
       </div>
       <div class="form-group">
         <label for="state" class="form-label">State</label>
@@ -85,6 +91,9 @@
           class="form-control"
           formControlName="state"
         />
+        <div class="text-danger" *ngIf="updateForm.get('state')?.touched && updateForm.get('state')?.hasError('required')">
+          Please select state
+        </div>
       </div>
       <div class="form-group">
         <label for="city" class="form-label">City</label>
@@ -95,6 +104,9 @@
           class="form-control"
           formControlName="city"
         />
+        <div class="text-danger" *ngIf="updateForm.get('city')?.touched && updateForm.get('city')?.hasError('required')">
+          Please provide City
+        </div>
       </div>
       <div class="form-group">
         <label for="address" class="form-label">Address</label>
@@ -105,6 +117,9 @@
           class="form-control"
           formControlName="address"
         />
+        <div class="text-danger" *ngIf="updateForm.get('address')?.touched && updateForm.get('address')?.hasError('required')">
+          Please provide Address
+        </div>
       </div>
       <div class="form-group">
         <label for="phoneNumber" class="form-label">PhoneNumber</label>
@@ -115,8 +130,11 @@
           class="form-control"
           formControlName="phoneNumber"
         />
+        <div class="text-danger" *ngIf="updateForm.get('phoneNumber')?.touched && updateForm.get('phoneNumber')?.hasError('required')">
+          Please provide Phone Number
+        </div>
       </div>
-      <button type="submit" class="btn btn-success" style="margin: 20px;" (click)="modal.close()" >Update</button>
+      <button type="submit" class="btn btn-success" style="margin: 20px;" (click)="modal.close()" [disabled]="updateForm.invalid">Update</button>
     </form>
   </div>
 </ng-template>

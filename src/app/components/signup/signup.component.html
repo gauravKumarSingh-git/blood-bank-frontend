@@ -16,6 +16,11 @@
               usernameFormGroup.get('usernameCtrl')?.hasError('minlength')">
                 Username should be at least 5 Characters
           </mat-error>
+          <mat-error
+            *ngIf="usernameFormGroup.get('usernameCtrl')?.touched &&
+              usernameFormGroup.get('usernameCtrl')?.hasError('maxlength')">
+                Username should be less than 16 characters
+          </mat-error>
         </mat-form-field>
         <mat-form-field class="col-6">
           <mat-label>Select Role</mat-label>
