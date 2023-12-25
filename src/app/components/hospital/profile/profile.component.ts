@@ -33,15 +33,15 @@ export class ProfileComponent implements OnInit{
           'userId': new FormControl(this.hospital.userId, [Validators.required]),
           'username': new FormControl(this.hospital.username, [Validators.required]),
           'password': new FormControl(this.hospital.password, [Validators.required]),
-          'email': new FormControl(this.hospital.email, [Validators.required]),
-          'gender': new FormControl(this.hospital.gender, [Validators.required]),
+          'email': new FormControl(this.hospital.email, [Validators.email, Validators.required, Validators.maxLength(20)]),
+          'gender': new FormControl(this.hospital.gender),
           'state': new FormControl(this.hospital.state, [Validators.required]),
-          'city': new FormControl(this.hospital.city, [Validators.required]),
-          'address': new FormControl(this.hospital.address, [Validators.required]),
-          'dateOfBirth': new FormControl(this.hospital.dateOfBirth, [Validators.required]),
-          'phoneNumber': new FormControl(this.hospital.phoneNumber, [Validators.required]),
+          'city': new FormControl(this.hospital.city, [Validators.required, Validators.pattern('^[a-zA-Z ]+$'), Validators.maxLength(20)]),
+          'address': new FormControl(this.hospital.address, [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]),
+          'dateOfBirth': new FormControl(this.hospital.dateOfBirth),
+          'phoneNumber': new FormControl(this.hospital.phoneNumber, [Validators.required, Validators.min(1000000000), Validators.max(9999999999)]),
           'role': new FormControl(this.hospital.role, [Validators.required]),
-          'requests': new FormControl(this.hospital.requests, [Validators.required])
+          'requests': new FormControl(this.hospital.requests)
         })
       }
     )

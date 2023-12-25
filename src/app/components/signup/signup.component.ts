@@ -22,6 +22,7 @@ export class SignupComponent implements OnInit {
   
   hide = true;
   maxDate = moment(new Date()).subtract(8, 'years').format('YYYY-MM-DD')
+  minDate = moment(new Date()).subtract(120, 'years').format('YYYY-MM-DD')
   usernameFormGroup: FormGroup;
   passwordFormGroup: FormGroup;
   userDetailsFormGroup: FormGroup;
@@ -48,6 +49,7 @@ export class SignupComponent implements OnInit {
           Validators.required,
           Validators.minLength(5),
           Validators.maxLength(15),
+          Validators.pattern('^[a-zA-Z0-9]+$')
         ],
       ],
       roleCtrl: ['', Validators.required],
@@ -59,20 +61,21 @@ export class SignupComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(8),
-          Validators.maxLength(60),
+          Validators.maxLength(20),
+          Validators.pattern('^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,16}$')
         ],
       ],
       confirmPwdCtrl: ['', [Validators.required, this.pwdCheck.bind(this)]],
     });
 
     this.userDetailsFormGroup = this._formBuilder.group({
-      nameCtrl: ['', Validators.required],
-      emailCtrl: ['', [Validators.required, Validators.email]],
-      genderCtrl: ['', Validators.required],
-      cityCtrl: ['', Validators.required],
+      nameCtrl: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$'), Validators.maxLength(20)]],
+      emailCtrl: ['', [Validators.required, Validators.email, Validators.maxLength(20)]],
+      genderCtrl: [''],
+      cityCtrl: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$'), Validators.maxLength(20)]],
       stateCtrl: ['', Validators.required],
-      addressCtrl: ['', Validators.required],
-      dobCtrl: ['', [Validators.required]],
+      addressCtrl: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]],
+      dobCtrl: [''],
       mnoCtrl: [
         '',
         [

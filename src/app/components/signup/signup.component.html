@@ -21,6 +21,11 @@
               usernameFormGroup.get('usernameCtrl')?.hasError('maxlength')">
                 Username should be less than 16 characters
           </mat-error>
+          <mat-error
+            *ngIf="usernameFormGroup.get('usernameCtrl')?.touched &&
+              usernameFormGroup.get('usernameCtrl')?.hasError('pattern')">
+                Username should contain alphabets and numerics only
+          </mat-error>
         </mat-form-field>
         <mat-form-field class="col-6">
           <mat-label>Select Role</mat-label>
@@ -45,24 +50,27 @@
     </form>
   </mat-step>
   <mat-step [stepControl]="passwordFormGroup" label="Set Password">
-    <form [formGroup]="passwordFormGroup">
-      <div>
-        <mat-form-field>
-          <mat-label>Password</mat-label>
-          <input 
-            [type]="hide ? 'password' : 'text'" 
-            matInput 
-            formControlName="pwdCtrl" 
-            placeholder="Enter Password"
-            required>
-          <button 
-            mat-icon-button 
-            matSuffix 
-            (click)="hide = !hide" [attr.aria-label]="'Hide password'" 
-            [attr.aria-pressed]="hide">
-            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </button>
-          <mat-error
+    <form [formGroup]="passwordFormGroup" class="d-flex row">
+      <div class="col-6">
+        <mat-form-field >
+          <!-- <div> -->
+
+            <mat-label>Password</mat-label>
+            <input 
+              [type]="hide ? 'password' : 'text'" 
+              matInput 
+              formControlName="pwdCtrl" 
+              placeholder="Enter Password"
+              required>
+            <button 
+              mat-icon-button 
+              matSuffix 
+              (click)="hide = !hide" [attr.aria-label]="'Hide password'" 
+              [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          <!-- </div> -->
+          <!-- <mat-error
             *ngIf="passwordFormGroup.get('pwdCtrl')?.touched && 
             passwordFormGroup.get('pwdCtrl')?.hasError('required')">
               Please provide password
@@ -72,9 +80,25 @@
             passwordFormGroup.get('pwdCtrl')?.hasError('minlength')">
               Password should have at least 8 characters
           </mat-error>
+          <mat-error
+            *ngIf="passwordFormGroup.get('pwdCtrl')?.touched && 
+            passwordFormGroup.get('pwdCtrl')?.hasError('maxlength')">
+              Password should be less than or equal to 20 characters
+          </mat-error> -->
+          <mat-error
+            *ngIf="passwordFormGroup.get('pwdCtrl')?.touched && 
+            passwordFormGroup.get('pwdCtrl')?.hasError('pattern')">
+              <p>Password must contain - </p>
+              <ul>
+                <li>Atleast one special character</li>
+                <li>Atleast one capital letter</li>
+                <li>Atleast one number</li>
+                <li>Atleast 8 characters, maximum 16 characters</li>
+              </ul>
+          </mat-error>
         </mat-form-field>
       </div>
-      <div>
+      <div class="col-6">
         <mat-form-field>
           <mat-label>Confirm Password</mat-label>
           <input 
@@ -97,13 +121,13 @@
             Password does not match
           </mat-error>
           <mat-error 
-            *ngIf="passwordFormGroup.get('confirmPwdCtrl')?.hasError('minLength') && 
+            *ngIf="passwordFormGroup.get('confirmPwdCtrl')?.hasError('minlength') && 
               passwordFormGroup.get('confirmPwdCtrl')?.touched">
             Password should contain at least 8 characters
           </mat-error>
         </mat-form-field>
       </div>
-      <div>
+      <div class="col-12" style="margin-top: 200px;">
         <button 
           mat-button 
           matStepperPrevious 
@@ -111,7 +135,7 @@
         <button 
           mat-button 
           matStepperNext 
-          [disabled]="passwordFormGroup.get('confirmPwdCtrl')?.hasError('passwordDoesNotMatch')"
+          [disabled]="passwordFormGroup.invalid"
           >Next</button>
       </div>
     </form>
@@ -128,6 +152,14 @@
             *ngIf="userDetailsFormGroup.get('nameCtrl')?.hasError('required')">
                 Please provide name
           </mat-error>
+          <mat-error
+            *ngIf="userDetailsFormGroup.get('nameCtrl')?.hasError('pattern')">
+                Name can contain alphabets only
+          </mat-error>
+          <mat-error
+            *ngIf="userDetailsFormGroup.get('nameCtrl')?.hasError('maxlength')">
+                maximum length can be 20
+          </mat-error>
         </mat-form-field>
         <mat-form-field class="col-4">
           <mat-label>Email</mat-label>
@@ -139,6 +171,10 @@
           <mat-error
             *ngIf="userDetailsFormGroup.get('emailCtrl')?.hasError('email')">
                 Invalid email
+          </mat-error>
+          <mat-error
+            *ngIf="userDetailsFormGroup.get('emailCtrl')?.hasError('maxlength')">
+                Maximum length can be 20
           </mat-error>
         </mat-form-field>
         <mat-form-field class="col-4" *ngIf="usernameFormGroup.get('roleCtrl')?.value==='ROLE_DONOR'">
@@ -207,6 +243,14 @@
             *ngIf="userDetailsFormGroup.get('cityCtrl')?.hasError('required')">
                 Please provide city
           </mat-error>
+          <mat-error
+            *ngIf="userDetailsFormGroup.get('cityCtrl')?.hasError('pattern')">
+                City can contain alphabets only
+          </mat-error>
+          <mat-error
+            *ngIf="userDetailsFormGroup.get('cityCtrl')?.hasError('maxlength')">
+                maximum length can be 20
+          </mat-error>
         </mat-form-field>
         <mat-form-field class="col-4">
           <mat-label>Address</mat-label>
@@ -215,12 +259,20 @@
             *ngIf="userDetailsFormGroup.get('addressCtrl')?.hasError('required')">
                 Please provide address
           </mat-error>
+          <mat-error
+            *ngIf="userDetailsFormGroup.get('addressCtrl')?.hasError('maxlength')">
+                Maximum length can be 30
+          </mat-error>
+          <mat-error
+            *ngIf="userDetailsFormGroup.get('addressCtrl')?.hasError('pattern')">
+                Address can contain alphabets and numbers only
+          </mat-error>
         </mat-form-field>
       </div>
       <div class="row">
         <mat-form-field class="col-4"  *ngIf="usernameFormGroup.get('roleCtrl')?.value==='ROLE_DONOR'">
           <mat-label>Date Of Birth</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="dobCtrl" placeholder="Enter your Date of Birth" [max]="maxDate">
+          <input matInput [matDatepicker]="picker" formControlName="dobCtrl" placeholder="Enter your Date of Birth" [max]="maxDate" [min]="minDate">
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
           <mat-error
@@ -244,7 +296,7 @@
       </div>
       <div>
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext type="submit">Next</button>
+        <button mat-button matStepperNext type="submit" [disabled]="userDetailsFormGroup.invalid">Next</button>
       </div>
     </form>
   </mat-step>

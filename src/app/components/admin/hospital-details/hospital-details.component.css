@@ -48,3 +48,21 @@ h2{
 .page-input:focus{
     outline: none;
 }
+.sortableCol{
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    align-items: center;
+    height: 100%;
+}
+
+.disabled-arrow {
+    color: rgb(188, 185, 185);
+}
+
+.enabled-arrow{
+    color: green;
+}
+.clear-btn{
+    border: 0px;
+}

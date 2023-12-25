@@ -120,11 +120,15 @@ export class RequestHistoryComponent {
   }
 
   onSearchFormSubmit(form: FormGroup) {
-    this.searchByUsername.next(form.value.username)
+    if(form.value.username){
+      this.searchByUsername.next(form.value.username)
+    }
   }
   
   search(){
-    this.searchByUsername.next(this.searchForm.value.username)
+    if(this.searchForm.value.username){
+      this.searchByUsername.next(this.searchForm.value.username)
+    }
 
   }
   clearSearch(){

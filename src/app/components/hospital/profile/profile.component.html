@@ -64,17 +64,59 @@
           class="form-control" 
           [value]="hospitalDetails.email"
           formControlName="email" />
+          <div class="text-danger" *ngIf="updateForm.get('email')?.touched && updateForm.get('email')?.hasError('required')">
+            Please provide email
+          </div>
+          <div class="text-danger" *ngIf="updateForm.get('email')?.touched && updateForm.get('email')?.hasError('email')">
+            Please enter valid email
+          </div>
+          <div class="text-danger" *ngIf="updateForm.get('email')?.touched && updateForm.get('email')?.hasError('maxlength')">
+            Maximum length can be 20
+          </div>
       </div>
       <div class="form-group">
         <label for="state" class="form-label">State</label>
-        <input
-          type="text"
-          id="state"
-          name="state"
-          class="form-control"
-          [value]="hospitalDetails.state"
-          formControlName="state"
-        />
+        <select id="state" name="state" formControlName="state" class="form-control" placeholder="Select your State">
+          <option value="Andhra Pradesh">Andhra Pradesh</option>
+          <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+          <option value="Assam">Assam</option>
+          <option value="Bihar">Bihar</option>
+          <option value="Chhattisgarh">Chhattisgarh</option>
+          <option value="Gujarat">Gujarat</option>
+          <option value="Haryana">Haryana</option>
+          <option value="Himachal Pradesh">Himachal Pradesh</option>
+          <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+          <option value="Goa">Goa</option>
+          <option value="Jharkhand">Jharkhand</option>
+          <option value="Karnataka">Karnataka</option>
+          <option value="Kerala">Kerala</option>
+          <option value="Madhya Pradesh">Madhya Pradesh</option>
+          <option value="Maharashtra">Maharashtra</option>
+          <option value="Manipur">Manipur</option>
+          <option value="Meghalaya">Meghalaya</option>
+          <option value="Mizoram">Mizoram</option>
+          <option value="Nagaland">Nagaland</option>
+          <option value="Odisha">Odisha</option>
+          <option value="Punjab">Punjab</option>
+          <option value="Rajasthan">Rajasthan</option>
+          <option value="Sikkim">Sikkim</option>
+          <option value="Tamil Nadu">Tamil Nadu</option>
+          <option value="Telangana">Telangana</option>
+          <option value="Tripura">Tripura</option>
+          <option value="Uttarakhand">Uttarakhand</option>
+          <option value="Uttar Pradesh">Uttar Pradesh</option>
+          <option value="West Bengal">West Bengal</option>
+          <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+          <option value="Chandigarh">Chandigarh</option>
+          <option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</option>
+          <option value="Daman and Diu">Daman and Diu</option>
+          <option value="Delhi">Delhi</option>
+          <option value="Lakshadweep">Lakshadweep</option>
+          <option value="Puducherry">Puducherry</option>
+        </select>
+        <div class="text-danger" *ngIf="updateForm.get('state')?.touched && updateForm.get('state')?.hasError('required')">
+          Please select state
+        </div>
       </div>
       <div class="form-group">
         <label for="city" class="form-label">City</label>
@@ -86,6 +128,15 @@
           [value]="hospitalDetails.city"
           formControlName="city"
         />
+        <div class="text-danger" *ngIf="updateForm.get('city')?.touched && updateForm.get('city')?.hasError('required')">
+          Please provide City
+        </div>
+        <div class="text-danger" *ngIf="updateForm.get('city')?.touched && updateForm.get('city')?.hasError('maxlength')">
+          Maximum length can be 20
+        </div>
+        <div class="text-danger" *ngIf="updateForm.get('city')?.touched && updateForm.get('city')?.hasError('pattern')">
+          City can only contain alphabets
+        </div>
       </div>
       <div class="form-group">
         <label for="address" class="form-label">Address</label>
@@ -97,6 +148,15 @@
           [value]="hospitalDetails.address"
           formControlName="address"
         />
+        <div class="text-danger" *ngIf="updateForm.get('address')?.touched && updateForm.get('address')?.hasError('required')">
+          Please provide Address
+        </div>
+        <div class="text-danger" *ngIf="updateForm.get('address')?.touched && updateForm.get('address')?.hasError('maxlength')">
+          Maximum length can be 30
+        </div>
+        <div class="text-danger" *ngIf="updateForm.get('address')?.touched && updateForm.get('address')?.hasError('pattern')">
+          Address can contain only alphabets and numbers
+        </div>
       </div>
       <div class="form-group">
         <label for="phoneNumber" class="form-label">PhoneNumber</label>
@@ -108,8 +168,15 @@
           [value]="hospitalDetails.phoneNumber"
           formControlName="phoneNumber"
         />
+        <div class="text-danger" *ngIf="updateForm.get('phoneNumber')?.touched && updateForm.get('phoneNumber')?.hasError('required')">
+          Please provide Phone Number
+        </div>
+        <div class="text-danger" *ngIf="updateForm.get('phoneNumber')?.touched && 
+          ( updateForm.get('phoneNumber')?.hasError('min') || updateForm.get('phoneNumber')?.hasError('max'))">
+          Invalid Phone Number
+        </div>
       </div>
-      <button type="submit" class="btn btn-success" style="margin: 20px;" (click)="modal.close()" >Update</button>
+      <button type="submit" class="btn btn-success" style="margin: 20px;" (click)="modal.close()" [disabled]="updateForm.invalid || !updateForm.dirty" >Update</button>
     </form>
   </div>
 </ng-template>

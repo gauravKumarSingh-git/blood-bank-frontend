@@ -26,6 +26,7 @@ export class AuthService {
     localStorage.setItem('jwt', '');
     localStorage.setItem('role', '');
     localStorage.setItem('username', '');
+    location.reload();
   }
 
   isLoggedIn() {
